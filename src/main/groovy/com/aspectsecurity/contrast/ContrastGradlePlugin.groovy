@@ -26,21 +26,19 @@ class ContrastGradlePlugin implements Plugin<Project> {
     private final String EXTENSION_NAME = "contrastConfiguration"
 
     //TODO implement in the extension
-    protected String jarPath;
 
 
     public void apply(Project target) {
          //allows for client to define their settings in their projects build.gradle
          target.extensions.create(EXTENSION_NAME, ContrastPluginExtension)
          target.afterEvaluate {
-             extension = target.getExtensions().getByName(EXTENSION_NAME);
+             extension = target.getExtensions().getByName(EXTENSION_NAME) as ContrastPluginExtension;
 
              contrastSDK = connectToTeamServer()
-             target.task("install", type: InstallContrastAgent){
+             target.task("contrastInstall", type: InstallContrastAgent){
                  println "Successfully authenticated to Teamserver. \n Attempting to install the Java agent."
              }
-
-             target.task("verify", type: VerifyContrast) << {
+             target.task("contrastVerify", type: VerifyContrast) << {
 
              }
          }
@@ -55,7 +53,7 @@ class ContrastGradlePlugin implements Plugin<Project> {
                 return new ContrastSDK(extension.username, extension.serviceKey, extension.apiKey);
             }
         } catch (IllegalArgumentException e) {
-            println "Unable to connect to TeamServer. Please check your maven settings."
+            throw new GradleException("Unable to connect to TeamServer. Please check your Gradle settings.")
         }
 
     }

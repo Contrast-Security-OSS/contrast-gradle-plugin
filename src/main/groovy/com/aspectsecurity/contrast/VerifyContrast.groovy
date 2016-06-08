@@ -11,6 +11,7 @@ import com.contrastsecurity.models.Trace
 import com.contrastsecurity.models.Traces
 import com.contrastsecurity.sdk.ContrastSDK
 import org.gradle.api.DefaultTask
+import org.gradle.api.GradleException
 import org.gradle.api.tasks.TaskAction
 
 
@@ -19,10 +20,11 @@ class VerifyContrast extends DefaultTask {
     private ContrastPluginExtension extension;
     private ContrastSDK contrast;
 
+
     @TaskAction
     def exec () {
-        extension = ContrastGradlePlugin.extension;
-        contrast = ContrastGradlePlugin.contrastSDK;
+        extension = ContrastGradlePlugin.extension
+        contrast = ContrastGradlePlugin.contrastSDK
         verifyForVulnerabilities()
     }
 
@@ -31,32 +33,32 @@ class VerifyContrast extends DefaultTask {
 
         println "Successfully authenticated to TeamServer."
 
-        ServerFilterForm serverFilterForm = new ServerFilterForm();
-        serverFilterForm.setApplicationIds(Arrays.asList(extension.appId));
-        serverFilterForm.setQ(extension.serverName);
+        ServerFilterForm serverFilterForm = new ServerFilterForm()
+        serverFilterForm.setApplicationIds(Arrays.asList(extension.appId))
+        serverFilterForm.setQ(extension.serverName)
 
-        Servers servers;
-        long serverId;
+        Servers servers
+        long serverId
 
         println "Sending server request to TeamServer."
 
         try {
-            servers = contrast.getServersWithFilter(extension.orgUuid, serverFilterForm);
+            servers = contrast.getServersWithFilter(extension.orgUuid, serverFilterForm)
         } catch (IOException e) {
-            //throw new MojoExecutionException("Unable to retrieve the servers.", e);
+            throw new GradleException("Unable to retrieve the servers.")
         } catch (UnauthorizedException e) {
-           // throw new MojoExecutionException("Unable to connect to TeamServer.", e);
+            throw new GradleException("Unable to connect to TeamServer.")
         }
 
         if (!servers.getServers().isEmpty()) {
-            serverId = servers.getServers().get(0).getServerId();
+            serverId = servers.getServers().get(0).getServerId()
         } else {
-            //throw new MojoExecutionException("Server with name '" + serverName + "' not found.");
+            throw new GradleException("Server with name '" + extension.serverName + "' not found.")
         }
 
-        FilterForm form = new FilterForm();
-        form.setSeverities(getSeverityList(extension.minSeverity));
-        form.setStartDate(ContrastGradlePlugin.verifyDateTime);
+        FilterForm form = new FilterForm()
+        form.setSeverities(getSeverityList(extension.minSeverity))
+        form.setStartDate(ContrastGradlePlugin.verifyDateTime)
 
         println "Sending vulnerability request to TeamServer."
 
@@ -65,9 +67,9 @@ class VerifyContrast extends DefaultTask {
         try {
             traces = contrast.getTracesWithFilter(extension.orgUuid, extension.appId, "servers", Long.toString(serverId), form);
         } catch (IOException e) {
-            //throw new MojoExecutionException("Unable to retrieve the traces.", e);
+            throw new GradleException("Unable to retrieve the traces.")
         } catch (UnauthorizedException e) {
-            //throw new MojoExecutionException("Unable to connect to TeamServer.", e);
+            throw new GradleException("Unable to connect to TeamServer.")
         }
 
         if (traces != null && traces.getCount() > 0) {
@@ -76,8 +78,7 @@ class VerifyContrast extends DefaultTask {
             for (Trace trace: traces.getTraces()) {
                 println generateTraceReport(trace)
             }
-
-            //throw new MojoExecutionException("Your application is vulnerable. Please see the above report for new vulnerabilities.");
+            throw new GradleException("Your application is vulnerable. Please see the above report for new vulnerabilities.")
         } else {
             println "No new vulnerabilities were found!"
         }

@@ -12,6 +12,7 @@ class ContrastPluginExtension {
     String appId
     String serverName
     String minSeverity
+    String jarPath
 
     //TODO remove when finished, just for testing
     @Override
@@ -24,6 +25,7 @@ class ContrastPluginExtension {
        println(appId)
        println(serverName)
        println(minSeverity)
+       println(jarPath)
     }
 
 
