@@ -38,3 +38,7 @@ contrastConfiguration {
     minSeverity = "Medium"
 }
 ```
+Sample
+```
+gradle build install verify
+```
