@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ContrastGradlePlugin.iml" filepath="$PROJECT_DIR$/.idea/modules/ContrastGradlePlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ContrastGradlePlugin_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ContrastGradlePlugin_main.iml" group="ContrastGradlePlugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ContrastGradlePlugin_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ContrastGradlePlugin_test.iml" group="ContrastGradlePlugin" />
+      <module fileurl="file://$PROJECT_DIR$/contrast-gradle-plugin.iml" filepath="$PROJECT_DIR$/contrast-gradle-plugin.iml" />
+    </modules>
+  </component>
+</project>

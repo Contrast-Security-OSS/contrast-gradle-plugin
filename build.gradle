@@ -1,0 +1,70 @@
+group 'com.aspectsecurity.contrast'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+apply plugin: 'maven-publish'
+
+sourceCompatibility = 1.5
+
+repositories {
+    mavenLocal() //for Contrast SDK
+    mavenCentral()
+}
+
+dependencies {
+    compile localGroovy()
+    compile gradleApi()
+    compile group: 'com.contrastsecurity', name: 'contrast-sdk-java', version:'2.0.0'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            mavenLocal()
+        }
+    }
+}
+
+/*
+contrast {
+    username = 'contrast_admin'
+    apiKey = "demo"
+    serviceKey = "demo"
+    apiUrl = "http://localhost:19080/Contrast/api"
+    orgUuid = "12345678-1234-1234-1234-12345678912"
+    appId = "12345678-1234-1234-1234-12345678912"
+    serverName = "server.namehere"
+    minSeverity = "Medium"
+}
+
+class ContrastGradlePlugin implements Plugin<Project> {
+    public void apply(Project target) {
+        target.extensions.create("contrast", ContrastPluginExtension)
+        target.task('contrast-init') << {
+            println "${target.contrast.username}"
+            println "${target.contrast.apiKey}"
+            println "${target.contrast.serviceKey}"
+            println "${target.contrast.apiUrl}"
+            println "${target.contrast.orgUuid}"
+            println "${target.contrast.appId}"
+            println "${target.contrast.serverName}"
+            println "${target.contrast.minSeverity}"
+        }
+    }
+}
+
+class ContrastPluginExtension {
+    String username
+    String apiKey
+    String serviceKey
+    String apiUrl;
+    String orgUuid;
+    String appId;
+    String serverName;
+    String minSeverity;
+}
+*/
+
