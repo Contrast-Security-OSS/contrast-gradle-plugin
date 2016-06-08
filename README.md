@@ -1,6 +1,6 @@
 # Contrast Gradle Plugin
 
-Repository for the Contrast Maven plugin. This plugin will download and install the Contrast Java agent during the initialize lifecycle phase. Then it will verify no new vulnerabilities were found before you call the verify goal.
+Repository for the Contrast Gradle plugin. This plugin will download and install the Contrast Java agent during the initialize lifecycle phase. Then it will verify no new vulnerabilities were found before you call the verify goal.
 
 ## Goals
 
