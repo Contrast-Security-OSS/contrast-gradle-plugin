@@ -9,7 +9,7 @@ class ContrastPluginExtension {
     String serviceKey
     String apiUrl
     String orgUuid
-    String appId
+    String appName
     String serverName
     String minSeverity = "Medium" //default
     String jarPath

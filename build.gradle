@@ -1,10 +1,10 @@
-group 'com.contrastsecurity'
-version '1.0-SNAPSHOT'
+group "com.contrastsecurity"
+version "1.0-SNAPSHOT"
 
-apply plugin: 'groovy'
-apply plugin: 'maven'
+apply plugin: "groovy"
+apply plugin: "maven"
 
-apply plugin: 'maven-publish'
+apply plugin: "maven-publish"
 
 sourceCompatibility = 1.5
 
@@ -20,10 +20,10 @@ repositories {
 dependencies {
     compile localGroovy()
     compile gradleApi()
-    testCompile gradleTestKit()
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: "com.contrastsecurity", name: "contrast-sdk-java", version:"2.1.0"
 
-    compile group: 'com.contrastsecurity', name: 'contrast-sdk-java', version:'2.0.0'
+    testCompile gradleTestKit()
+    testCompile group: "junit", name: "junit", version: "4.11"
 }
 
 uploadArchives {
@@ -34,4 +34,38 @@ uploadArchives {
     }
 }
 
+/*
+For plugin publishing to the official Gradle Plugin portal
+Guide here: https://plugins.gradle.org/docs/submit
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.gradle.publish:plugin-publish-plugin:0.9.4"
+    }
+}
 
+apply plugin: "com.gradle.plugin-publish"
+
+repositories {
+    jcenter()
+}
+
+
+pluginBundle {
+    website = "http://contrastsecurity.com"
+    vcsUrl = "github link will go here"
+    description = "Gradle plugin for Contrast Security"
+    tags = ["Contrast", "Security"]
+
+    plugins {
+        greetingsPlugin {
+            id = "com.contrastsecurity.ContrastGradlePlugin"
+            displayName = "Contrast Security Gradle Plugin"
+        }
+    }
+}
+*/

@@ -42,7 +42,7 @@ class ContrastTaskTests {
                 "serviceKey = 'demo' \n " +
                 "apiUrl = 'http://localhost:19080/Contrast/api' \n " +
                 "orgUuid = '632AAF07-557E-4B26-99A0-89F85D1748DB' \n " +
-                "appId = '54afdf56-8b5f-4cf3-a9a9-cbfe2c134927' \n " +
+                "appName = '54afdf56-8b5f-4cf3-a9a9-cbfe2c134927' \n " +
                 "serverName = 'ip-192-168-1-50.ec2.internal' \n " +
                 "minSeverity = 'Medium' \n " +
                 "}");
@@ -67,7 +67,7 @@ class ContrastTaskTests {
                 "serviceKey = 'demo' \n " +
                 "apiUrl = 'http://localhost:19080/Contrast/api' \n " +
                 "orgUuid = '632AAF07-557E-4B26-99A0-89F85D1748DB' \n " +
-                "appId = '54afdf56-8b5f-4cf3-a9a9-cbfe2c134927' \n " +
+                "appName = '54afdf56-8b5f-4cf3-a9a9-cbfe2c134927' \n " +
                 "serverName = 'ip-192-168-1-50.ec2.internal' \n " +
                 "minSeverity = 'Medium' \n " +
                 "}");
@@ -92,7 +92,7 @@ class ContrastTaskTests {
                 "serviceKey = '' \n " +
                 "apiUrl = 'http://localhost:19080/Contrast/api' \n " +
                 "orgUuid = '632AAF07-557E-4B26-99A0-89F85D1748DB' \n " +
-                "appId = '54afdf56-8b5f-4cf3-a9a9-cbfe2c134927' \n " +
+                "appName = '54afdf56-8b5f-4cf3-a9a9-cbfe2c134927' \n " +
                 "serverName = 'ip-192-168-1-50.ec2.internal' \n " +
                 "minSeverity = 'Medium' \n " +
                 "}");
@@ -117,7 +117,7 @@ class ContrastTaskTests {
                 "serviceKey = 'demo' \n " +
                 "apiUrl = '' \n " +
                 "orgUuid = '632AAF07-557E-4B26-99A0-89F85D1748DB' \n " +
-                "appId = '54afdf56-8b5f-4cf3-a9a9-cbfe2c134927' \n " +
+                "appName = '54afdf56-8b5f-4cf3-a9a9-cbfe2c134927' \n " +
                 "serverName = 'ip-192-168-1-50.ec2.internal' \n " +
                 "minSeverity = 'Medium' \n " +
                 "}");
@@ -142,7 +142,7 @@ class ContrastTaskTests {
                 "serviceKey = 'demo' \n " +
                 "apiUrl = 'http://localhost:19080/Contrast/api' \n " +
                 "orgUuid = '' \n " +
-                "appId = '54afdf56-8b5f-4cf3-a9a9-cbfe2c134927' \n " +
+                "appName = '54afdf56-8b5f-4cf3-a9a9-cbfe2c134927' \n " +
                 "serverName = 'ip-192-168-1-50.ec2.internal' \n " +
                 "minSeverity = 'Medium' \n " +
                 "}");
@@ -167,7 +167,7 @@ class ContrastTaskTests {
                 "serviceKey = 'demo' \n " +
                 "apiUrl = 'http://localhost:19080/Contrast/api' \n " +
                 "orgUuid = '632AAF07-557E-4B26-99A0-89F85D1748DB' \n " +
-                "appId = '' \n " +
+                "appName = '' \n " +
                 "serverName = 'ip-192-168-1-50.ec2.internal' \n " +
                 "minSeverity = 'Medium' \n " +
                 "}");
@@ -192,7 +192,7 @@ class ContrastTaskTests {
                 "serviceKey = 'demo' \n " +
                 "apiUrl = 'http://localhost:19080/Contrast/api' \n " +
                 "orgUuid = '632AAF07-557E-4B26-99A0-89F85D1748DB' \n " +
-                "appId = '54afdf56-8b5f-4cf3-a9a9-cbfe2c134927' \n " +
+                "appName = '54afdf56-8b5f-4cf3-a9a9-cbfe2c134927' \n " +
                 "serverName = '' \n " +
                 "minSeverity = 'Medium' \n " +
                 "}");

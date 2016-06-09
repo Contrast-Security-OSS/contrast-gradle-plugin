@@ -33,7 +33,7 @@ contrastConfiguration {
     serviceKey = "demo"
     apiUrl = "http://localhost:19080/Contrast/api"
     orgUuid = "632AAF07-557E-4B26-99A0-89F85D1748DB"
-    appId = "12345678-1234-1234-1234-12345678912"
+    appName = "WebGoat"
     serverName = "ip-192-168-1-50.ec2.internal"
     minSeverity = "Medium"
     jarPath = "/path/to/contrast.jar"
