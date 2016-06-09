@@ -13,20 +13,5 @@ class ContrastPluginExtension {
     String serverName
     String minSeverity = "Medium" //default
     String jarPath
-
-    //TODO remove when finished, just for testing
-    @Override
-    String printExtensionValues(){
-       println(username)
-       println(apiKey)
-       println(serviceKey)
-       println(apiUrl)
-       println(orgUuid)
-       println(appId)
-       println(serverName)
-       println(minSeverity)
-       println(jarPath)
-    }
-
 }
 
