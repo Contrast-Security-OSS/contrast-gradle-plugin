@@ -1,4 +1,4 @@
-package com.aspectsecurity.contrast;
+package com.contrastsecurity;
 
 /**
  * Created by donaldpropst on 6/7/16.
@@ -11,12 +11,12 @@ class ContrastPluginExtension {
     String orgUuid
     String appId
     String serverName
-    String minSeverity
+    String minSeverity = "Medium" //default
     String jarPath
 
     //TODO remove when finished, just for testing
     @Override
-    String toString(){
+    String printExtensionValues(){
        println(username)
        println(apiKey)
        println(serviceKey)
@@ -27,8 +27,6 @@ class ContrastPluginExtension {
        println(minSeverity)
        println(jarPath)
     }
-
-
 
 }
 

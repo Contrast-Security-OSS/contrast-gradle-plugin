@@ -1,7 +1,7 @@
 /**
  * Created by donaldpropst on 6/8/16.
  */
-package com.aspectsecurity.contrast
+package com.contrastsecurity
 
 import com.contrastsecurity.exceptions.UnauthorizedException
 import com.contrastsecurity.http.FilterForm

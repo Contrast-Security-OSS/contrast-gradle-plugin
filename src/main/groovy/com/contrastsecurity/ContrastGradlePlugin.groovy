@@ -2,17 +2,13 @@
  * Created by donaldpropst on 6/7/16.
  */
 
-package com.aspectsecurity.contrast
+package com.contrastsecurity
 
-import com.contrastsecurity.exceptions.UnauthorizedException
-import com.contrastsecurity.models.AgentType
 import com.contrastsecurity.sdk.ContrastSDK
-import org.apache.commons.io.FileUtils
 import org.apache.commons.lang.StringUtils
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.wrapper.Install
 
 /**
  * Created by donaldpropst on 6/7/16.
@@ -25,23 +21,19 @@ class ContrastGradlePlugin implements Plugin<Project> {
 
     private final String EXTENSION_NAME = "contrastConfiguration"
 
-    //TODO implement in the extension
-
-
+    @Override
     public void apply(Project target) {
          //allows for client to define their settings in their projects build.gradle
          target.extensions.create(EXTENSION_NAME, ContrastPluginExtension)
-         target.afterEvaluate {
-             extension = target.getExtensions().getByName(EXTENSION_NAME) as ContrastPluginExtension;
+         extension = target.getExtensions().getByName(EXTENSION_NAME) as ContrastPluginExtension;
 
+         target.afterEvaluate {
              contrastSDK = connectToTeamServer()
-             target.task("contrastInstall", type: InstallContrastAgent){
+             target.task("contrastInstall", type: InstallContrastAgent) {
                  println "Successfully authenticated to Teamserver. \n Attempting to install the Java agent."
              }
-             target.task("contrastVerify", type: VerifyContrast) << {
-
-             }
-         }
+             target.task("contrastVerify", type: VerifyContrast)
+        }
     }
 
     ContrastSDK connectToTeamServer() throws GradleException{
@@ -57,12 +49,6 @@ class ContrastGradlePlugin implements Plugin<Project> {
         }
 
     }
-
-
-
-
-
-
 }
 
 

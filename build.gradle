@@ -1,4 +1,4 @@
-group 'com.aspectsecurity.contrast'
+group 'com.contrastsecurity'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'groovy'
@@ -8,6 +8,10 @@ apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.5
 
+test {
+    testLogging.showStandardStreams = true
+}
+
 repositories {
     mavenLocal() //for Contrast SDK
     mavenCentral()
@@ -16,8 +20,10 @@ repositories {
 dependencies {
     compile localGroovy()
     compile gradleApi()
-    compile group: 'com.contrastsecurity', name: 'contrast-sdk-java', version:'2.0.0'
+    testCompile gradleTestKit()
     testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    compile group: 'com.contrastsecurity', name: 'contrast-sdk-java', version:'2.0.0'
 }
 
 uploadArchives {

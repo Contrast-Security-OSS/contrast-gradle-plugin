@@ -1,4 +1,4 @@
-package com.aspectsecurity.contrast
+package com.contrastsecurity
 
 import com.contrastsecurity.exceptions.UnauthorizedException
 import com.contrastsecurity.models.AgentType
@@ -8,7 +8,6 @@ import org.apache.commons.lang.StringUtils
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Project
-import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 
 
@@ -16,7 +15,6 @@ class InstallContrastAgent extends DefaultTask {
 
     private static final String AGENT_NAME = "contrast.jar"
     private ContrastPluginExtension extension
-    protected String jarPath
 
     @TaskAction
     def exec () {
