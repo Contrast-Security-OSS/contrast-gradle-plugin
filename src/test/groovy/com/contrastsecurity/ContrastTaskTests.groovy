@@ -30,66 +30,6 @@ class ContrastTaskTests {
         buildFile = testProjectDir.newFile("build.gradle")
     }
 
-    /*
-    Success configurations
-     */
-
-    //A successful contrastConfiguration should pass the contrastInstall task
-    @Test
-    public void testInstallTaskProperConfiguration() {
-
-        String buildFileContent = (getBuildScriptDependencies() +
-                "apply plugin: 'contrastplugin' \n " +
-                "contrastConfiguration { \n" +
-                "username = 'contrast_admin' \n" +
-                "apiKey = 'demo' \n " +
-                "serviceKey = 'demo' \n " +
-                "apiUrl = 'http://localhost:19080/Contrast/api' \n " +
-                "orgUuid = '632AAF07-557E-4B26-99A0-89F85D1748DB' \n " +
-                "appId = '54afdf56-8b5f-4cf3-a9a9-cbfe2c134927' \n " +
-                "serverName = 'ip-192-168-1-50.ec2.internal' \n " +
-                "minSeverity = 'Medium' \n " +
-                "}")
-
-        writeFile(buildFile, buildFileContent)
-        BuildResult result = GradleRunner.create()
-                .withProjectDir(testProjectDir.getRoot())
-                .withArguments("contrastInstall")
-                .build()
-        assertEquals(result.task(":contrastInstall").getOutcome(), SUCCESS)
-    }
-
-    //A successful contrastConfiguration should pass the contrastVerify task
-    @Test
-    public void testVerifyTaskProperConfiguration() {
-
-        String buildFileContent = (getBuildScriptDependencies() +
-                "apply plugin: 'contrastplugin' \n " +
-                "contrastConfiguration { \n" +
-                "username = 'contrast_admin' \n" +
-                "apiKey = 'demo' \n " +
-                "serviceKey = 'demo' \n " +
-                "apiUrl = 'http://localhost:19080/Contrast/api' \n " +
-                "orgUuid = '632AAF07-557E-4B26-99A0-89F85D1748DB' \n " +
-                "appId = '54afdf56-8b5f-4cf3-a9a9-cbfe2c134927' \n " +
-                "serverName = 'ip-192-168-1-50.ec2.internal' \n " +
-                "minSeverity = 'Medium' \n " +
-                "}")
-
-        writeFile(buildFile, buildFileContent)
-        BuildResult result = GradleRunner.create()
-                .withProjectDir(testProjectDir.getRoot())
-                .withArguments("contrastVerify")
-                .build()
-        assertEquals(result.task(":contrastVerify").getOutcome(), SUCCESS)
-    }
-
-
-
-    /*
-      Failing configurations
-     */
-
     //No username supplied
     @Test(expected = UnexpectedBuildFailure)
     public void testInstallTaskInvalidConfigurationNoUsername() {

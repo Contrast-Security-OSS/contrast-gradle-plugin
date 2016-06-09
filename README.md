@@ -1,11 +1,11 @@
 # Contrast Gradle Plugin
 
-Repository for the Contrast Gradle plugin. This plugin will download and install the Contrast Java agent during the initialize lifecycle phase. Then it will verify no new vulnerabilities were found before you call the verify goal.
+Repository for the Contrast Gradle plugin. This plugin will allow for a Contrast Java agent to be downloaded and then ensure that there are no new vulnerabilities found.
 
 ## Goals
 
-* `install`: installs a Contrast Java agent to your local project
-* `verify`: checks for new vulnerabilities in your web application
+* `contrastInstall`: installs a Contrast Java agent to your local project
+* `contrastVerify`: checks for new vulnerabilities in your web application
 
 
 ## Configuration Options
@@ -24,7 +24,7 @@ Repository for the Contrast Gradle plugin. This plugin will download and install
 
 ## Example Configurations
 
-```settings
+```build.gradle
 apply plugin: 'contrastplugin'
 
 contrastConfiguration {
@@ -36,5 +36,12 @@ contrastConfiguration {
     appId = "12345678-1234-1234-1234-12345678912"
     serverName = "ip-192-168-1-50.ec2.internal"
     minSeverity = "Medium"
+    jarPath = "/path/to/contrast.jar"
 }
 ```
+## Example Usage
+```
+gradle build contrastInstall contrastVerify
+```
+
+
