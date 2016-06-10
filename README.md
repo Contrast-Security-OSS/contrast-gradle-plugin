@@ -39,6 +39,7 @@ contrastConfiguration {
     jarPath = "/path/to/contrast.jar"
 }
 ```
+
 ## First Time Usage
 ```
 gradle build contrastInstall
@@ -47,6 +48,7 @@ java -javaagent:contrast.jar -Dcontrast.appname=specifyYourAppNameHere -jar your
 ```
 
 Now specify app name in your build.gradle configuration
+
 
 ```
 gradle build contrastVerify
