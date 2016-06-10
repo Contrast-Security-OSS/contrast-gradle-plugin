@@ -7,7 +7,6 @@ Repository for the Contrast Gradle plugin. This plugin will allow for a Contrast
 * `contrastInstall`: installs a Contrast Java agent to your local project
 * `contrastVerify`: checks for new vulnerabilities in your web application
 
-
 ## Configuration Options
 
 | Parameter   | Required | Default | Description                                             |
@@ -39,9 +38,16 @@ contrastConfiguration {
     jarPath = "/path/to/contrast.jar"
 }
 ```
-## Example Usage
+## First Time Usage
 ```
-gradle build contrastInstall contrastVerify
+gradle build contrastInstall
+cd build/
+java -javaagent:contrast.jar -Dcontrast.appname=specifyYourAppNameHere -jar yourproject.jar
+```
+Now specify app name in your build.gradle configuration
+```
+gradle build contrastVerify
+
 ```
 
 
