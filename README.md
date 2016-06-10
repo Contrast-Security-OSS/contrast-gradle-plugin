@@ -23,7 +23,8 @@ Repository for the Contrast Gradle plugin. This plugin will allow for a Contrast
 
 ## Example Configurations
 
-```build.gradle
+```
+build.gradle
 apply plugin: 'contrastplugin'
 
 contrastConfiguration {
@@ -44,7 +45,9 @@ gradle build contrastInstall
 cd build/
 java -javaagent:contrast.jar -Dcontrast.appname=specifyYourAppNameHere -jar yourproject.jar
 ```
+
 Now specify app name in your build.gradle configuration
+
 ```
 gradle build contrastVerify
 
