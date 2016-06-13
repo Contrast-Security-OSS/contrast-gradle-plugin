@@ -39,10 +39,16 @@ contrastConfiguration {
     jarPath = "/path/to/contrast.jar"
 }
 ```
-## First Time Usage
+## First Time Usage Clone Contrast SDK
 ```
+git clone https://github.com/Contrast-Security-OSS/contrast-sdk-java
+cd contrastSDK
+mvn install
+```
+## First Time Usage Contrast Plugin
+ ```
 gradle build contrastInstall
-cd build/
+cd build
 java -javaagent:contrast.jar -Dcontrast.appname=specifyYourAppNameHere -jar yourproject.jar
 ```
 
