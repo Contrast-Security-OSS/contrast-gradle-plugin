@@ -21,24 +21,7 @@ Repository for the Contrast Gradle plugin. This plugin will allow for a Contrast
 | minSeverity | False    | Medium  | Minimum severity level to verify                        |
 | jarPath     | False    |         | Path to contrast.jar if you already have one downloaded |
 
-## Example Configurations
 
-```
-build.gradle
-apply plugin: 'contrastplugin'
-
-contrastConfiguration {
-    username = "contrast_admin"
-    apiKey = "demo"
-    serviceKey = "demo"
-    apiUrl = "http://localhost:19080/Contrast/api"
-    orgUuid = "632AAF07-557E-4B26-99A0-89F85D1748DB"
-    appName = "WebGoat"
-    serverName = "ip-192-168-1-50.ec2.internal"
-    minSeverity = "Medium"
-    jarPath = "/path/to/contrast.jar"
-}
-```
 
 ## First Time Usage Clone Contrast SDK
 This step installs the Contrast SDK into your local Maven repository
@@ -49,18 +32,46 @@ git checkout jenkins
 mvn install
 ```
 
-## First Time Usage Contrast Plugin
- ```
+## Example Configurations
+In your projects build.gradle file specify the following
+The jarPath and minSeverity are **not** required.
+```
+buildscript {
+    repositories {
+        mavenLocal()
+    }
+
+    dependencies {
+        classpath("com.contrastsecurity:ContrastGradlePlugin:1.0-SNAPSHOT")
+    }
+}
+
+apply plugin: 'contrastplugin'
+
+contrastConfiguration {
+    username = "contrast_admin"
+    apiKey = "demo"
+    serviceKey = "demo"
+    apiUrl = "http://localhost:19080/Contrast/api"
+    orgUuid = "632AAF07-557E-4B26-99A0-89F85D1748DB"
+    appName = "DonnieTestApp"
+    serverName = "ip-192-168-1-50.ec2.internal"
+    minSeverity = "Medium"
+    jarPath = "/Users/donaldpropst/git/SamplePluginUse/build/contrast.jar"
+}
+```
+## Install and Setup
+`contrastInstall` installs the contrast.jar in your projects build folder. You can then use the jar to onboard an application.
+```
 gradle build contrastInstall
 cd build
-java -javaagent:contrast.jar Dcontrast.server=yourServerName -Dcontrast.appname=specifyYourAppNameHere -jar yourproject.jar
+java -javaagent:contrast.jar -Dcontrast.server=yourServerName -Dcontrast.appname=specifyYourAppNameHere -jar yourproject.jar
 ```
-
-Now specify the app name and server name in your build.gradle configuration
-
+## Verification
+After an application has been onboarded the appName and serverName need to be specified in the contrastConfiguration extension of your build.gradle
+`contrastVerify` will now check to make sure there aren't any new vulnerabilities.
 ```
 gradle build contrastVerify
-
 ```
 
 
