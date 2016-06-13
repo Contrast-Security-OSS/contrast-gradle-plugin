@@ -29,7 +29,7 @@ git clone https://github.com/Contrast-Security-OSS/contrast-sdk-java
 cd contrast-sdk-java
 mvn install
 ```
-3. The second dependency is the actual Contrast Gradle Plugin.  We will clone that from Bitbucket and publish it to the local Maven repository as well.
+ 3. The second dependency is the actual Contrast Gradle Plugin.  We will clone that from Bitbucket and publish it to the local Maven repository as well.
 ``` 
 git clone git@bitbucket.org:contrastsecurity/contrast-gradle-plugin.git
 cd contrast-gradle-plugin
@@ -71,7 +71,7 @@ java -javaagent:contrast.jar -Dcontrast.appname=mytestapp -Dcontrast.server=myte
 ```
 8. In your TeamServer verify that the application with the appname specified in the command above shows up. 
 9. In the VehicleMPG projects build.gradle we will now edit the contrastConfiguration to specify the appName and serverName that we setup in the previous step.
-    ```
+```
 contrastConfiguration {
     username = "alreadySetup"
     apiKey = "alreadySetup"
@@ -83,7 +83,7 @@ contrastConfiguration {
     //minSeverity = "Optional"
     //jarPath = "Optional"
 }
-    ```
+```
 10.  We can now run the verification task at any time to check for vulnerabilties.
 ```
 gradle build contrastVerify -x test
