@@ -41,9 +41,11 @@ contrastConfiguration {
 ```
 
 ## First Time Usage Clone Contrast SDK
+This step installs the Contrast SDK into your local Maven repository
 ```
 git clone https://github.com/Contrast-Security-OSS/contrast-sdk-java
 cd contrastSDK
+git checkout jenkins
 mvn install
 ```
 
