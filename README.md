@@ -34,7 +34,8 @@ mvn install
 
 ## Example Configurations
 In your projects build.gradle file specify the following
-The jarPath and minSeverity are **not** required.
+
+**NOTE:** The jarPath and minSeverity are **not** required.
 ```
 buildscript {
     repositories {
