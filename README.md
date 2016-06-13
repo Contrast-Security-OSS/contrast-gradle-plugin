@@ -53,10 +53,10 @@ mvn install
  ```
 gradle build contrastInstall
 cd build
-java -javaagent:contrast.jar -Dcontrast.appname=specifyYourAppNameHere -jar yourproject.jar
+java -javaagent:contrast.jar Dcontrast.server=yourServerName -Dcontrast.appname=specifyYourAppNameHere -jar yourproject.jar
 ```
 
-Now specify app name in your build.gradle configuration
+Now specify the app name and server name in your build.gradle configuration
 
 ```
 gradle build contrastVerify
