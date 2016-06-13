@@ -21,7 +21,7 @@ class VerifyContrast extends DefaultTask {
 
     private ContrastPluginExtension extension;
     private ContrastSDK contrast;
-
+    //
 
     @TaskAction
     def exec() {
