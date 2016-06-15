@@ -13,7 +13,7 @@ class ContrastGradlePlugin implements Plugin<Project> {
     static Date verifyDateTime;
     static ContrastSDK contrastSDK;
 
-    private final String EXTENSION_NAME = "contrastConfiguration"
+    private static final String EXTENSION_NAME = "contrastConfiguration"
 
     @Override
     public void apply(Project target) {
