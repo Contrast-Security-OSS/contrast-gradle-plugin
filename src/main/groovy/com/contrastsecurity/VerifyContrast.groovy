@@ -1,6 +1,3 @@
-/**
- * Created by donaldpropst on 6/8/16.
- */
 package com.contrastsecurity
 
 import com.contrastsecurity.exceptions.UnauthorizedException

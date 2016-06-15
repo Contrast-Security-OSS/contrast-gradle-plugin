@@ -6,9 +6,7 @@ import org.junit.Test
 
 import static org.junit.Assert.assertTrue
 
-/**
- * Created by donaldpropst on 6/9/16.
- */
+
 class ContrastPluginTest {
 
     //Ensures that the plugin is applicable

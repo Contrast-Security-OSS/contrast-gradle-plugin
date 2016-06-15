@@ -17,9 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import static org.gradle.testkit.runner.TaskOutcome.*;
-/**
- * Created by donaldpropst on 6/9/16.
- */
+
 class ContrastTaskTests {
 
     @Rule public final TemporaryFolder testProjectDir = new TemporaryFolder()
