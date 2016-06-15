@@ -30,11 +30,7 @@ cd contrast-sdk-java
 mvn install
 ```
 * The second dependency is the actual Contrast Gradle Plugin.  We will clone that from Bitbucket and publish it to the local Maven repository as well.
-<<<<<<< HEAD
 ```
-=======
-``` 
->>>>>>> 409a46130e5154c307d44cc3a3673c1e92abdcb6
 git clone git@bitbucket.org:contrastsecurity/contrast-gradle-plugin.git
 cd contrast-gradle-plugin
 gradle build install publishToMavenLocal
@@ -48,11 +44,7 @@ sudo mkdir -p /data/db
 brew services start mongodb
 ```
 
-<<<<<<< HEAD
 * Now we have an application that is ready to run.  Open up the VehicleMPG/build.gradle file.  Scroll to the very bottom and you should find the following contrastConfiguration. All of these values can be found in TeamServer already **except** for appName and serverName.
-=======
-* Now we have an application that is ready to run.  Open up the VehicleMPG/build.gradle file.  Scroll to the very bottom and you should find the following contrastConfiguration. All of these values can be found in TeamServer already **except** for appName and serverName.  
->>>>>>> 409a46130e5154c307d44cc3a3673c1e92abdcb6
 ```
 contrastConfiguration {
     username = "username"
@@ -66,7 +58,6 @@ contrastConfiguration {
     //jarPath = "Optional"
 }
 ```
-<<<<<<< HEAD
 * Once username, apiKey, serviceKey, apiUrl, and orgUuid have been configured we can install the contrast jar file by calling the `contrastInstall` task. This will install **contrast.jar** within the projects build directory.
 ```
 cd path/to/VehicleMPG
@@ -74,24 +65,11 @@ gradle build -x test contrastInstall
 ```
 
 * The next step is to run the application with the java agent.  We will want to check 2 things **after** this step. 1) That the test application is running at `http://localhost:8080` & 2) that the application shows up within TeamServer.
-=======
-* Once username, apiKey, serviceKey, apiUrl, and orgUuid have been configured we can install the contrast jar file by calling the `contrastInstall` task. This will install **contrast.jar** within the projects build directory.  
-```
-cd path/to/VehicleMPG 
-gradle build -x test contrastInstall
-```
-
-* The next step is to run the application with the java agent.  We will want to check 2 things **after** this step. 1) That the test application is running at `http://localhost:8080` & 2) that the application shows up within TeamServer.  
->>>>>>> 409a46130e5154c307d44cc3a3673c1e92abdcb6
 ```
 cd path/to/VehicleMPG/build
 java -javaagent:contrast.jar -Dcontrast.appname=mytestapp -Dcontrast.server=mytestserver -jar libs/VehicleMPG-0.0.1-SNAPSHOT.jar
 ```
-<<<<<<< HEAD
 * In your TeamServer verify that the application with the appname specified in the command above shows up.
-=======
-* In your TeamServer verify that the application with the appname specified in the command above shows up. 
->>>>>>> 409a46130e5154c307d44cc3a3673c1e92abdcb6
 * In the VehicleMPG projects build.gradle we will now edit the contrastConfiguration to specify the appName and serverName that we setup in the previous step.
 ```
 contrastConfiguration {
@@ -109,10 +87,6 @@ contrastConfiguration {
 *  We can now run the verification task at any time to check for vulnerabilties.
 ```
 gradle build contrastVerify -x test
-<<<<<<< HEAD
-```
-* That's it. An application has been onboarded from start to finish and vulnerabilities can be checked at any point.
-=======
 ```
 * That's it. An application has been onboarded from start to finish and vulnerabilities can be checked at any point.
 
@@ -139,30 +113,7 @@ contrastConfiguration {
     minSeverity = "Medium"
     //jarPath = "/Users/donaldpropst/git/SamplePluginUse/build/contrast.jar"
 }
->>>>>>> 409a46130e5154c307d44cc3a3673c1e92abdcb6
-
-## Configuration
-```
-buildscript {
-    repositories {
-        mavenLocal()
-    }
-    dependencies {
-        classpath("com.contrastsecurity:ContrastGradlePlugin:1.0-SNAPSHOT")
-    }
-}
-
-apply plugin: 'contrastplugin'
-contrastConfiguration {
-    username = "demo"
-    apiKey = "demo"
-    serviceKey = "demo"
-    apiUrl = "http://localhost:19080/Contrast/api"
-    orgUuid = "ASDF-LKJH-POIU-MNBV-LKJH"
-    appName = "appNameFromTeamServer"
-    serverName = "serverNameFromTeamServer"
-    minSeverity = "Medium"
-    //jarPath = "/Users/donaldpropst/git/SamplePluginUse/build/contrast.jar"
-}
 
 ```
+
+

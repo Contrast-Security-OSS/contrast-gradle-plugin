@@ -1,4 +1,5 @@
 /.gradle/
 /.idea/
 /build/
-contrast-gradle-plugin.iml
+*.iml
+.DS_Store
