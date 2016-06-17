@@ -101,7 +101,7 @@ buildscript {
     }
 }
 
-apply plugin: 'contrastplugin'
+apply plugin: 'com.contrastsecurity.contrastplugin'
 contrastConfiguration {
     username = "demo"
     apiKey = "demo"

@@ -11,5 +11,6 @@ class ContrastPluginExtension {
     String serverName
     String minSeverity = "Medium" //default
     String jarPath
+    
 }
 

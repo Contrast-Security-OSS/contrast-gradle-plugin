@@ -33,7 +33,7 @@ class ContrastTaskTests {
     public void testInstallTaskInvalidConfigurationNoUsername() {
 
         String buildFileContent = (getBuildScriptDependencies() +
-                "apply plugin: 'contrastplugin' \n " +
+                "apply plugin: 'com.contrastsecurity.contrastplugin' \n " +
                 "contrastConfiguration { \n" +
                 "username = ''\n" +
                 "apiKey = 'demo' \n " +
@@ -58,7 +58,7 @@ class ContrastTaskTests {
     public void testInstallTaskInvalidConfigurationNoApiKey() {
 
         String buildFileContent = (getBuildScriptDependencies() +
-                "apply plugin: 'contrastplugin' \n " +
+                "apply plugin: 'com.contrastsecurity.contrastplugin' \n " +
                 "contrastConfiguration { \n" +
                 "username = 'contrast_admin'\n" +
                 "apiKey = '' \n " +
@@ -83,7 +83,7 @@ class ContrastTaskTests {
     public void testInstallTaskInvalidConfigurationNoServiceKey() {
 
         String buildFileContent = (getBuildScriptDependencies() +
-                "apply plugin: 'contrastplugin' \n " +
+                "apply plugin: 'com.contrastsecurity.contrastplugin' \n " +
                 "contrastConfiguration { \n" +
                 "username = 'contrast_admin'\n" +
                 "apiKey = 'demo' \n " +
@@ -108,7 +108,7 @@ class ContrastTaskTests {
     public void testInstallTaskInvalidConfigurationNoApiUrl() {
 
         String buildFileContent = (getBuildScriptDependencies() +
-                "apply plugin: 'contrastplugin' \n " +
+                "apply plugin: 'com.contrastsecurity.contrastplugin' \n " +
                 "contrastConfiguration { \n" +
                 "username = 'contrast_admin'\n" +
                 "apiKey = 'demo' \n " +
@@ -133,7 +133,7 @@ class ContrastTaskTests {
     public void testInstallTaskInvalidConfigurationNoOrgUuid() {
 
         String buildFileContent = (getBuildScriptDependencies() +
-                "apply plugin: 'contrastplugin' \n " +
+                "apply plugin: 'com.contrastsecurity.contrastplugin' \n " +
                 "contrastConfiguration { \n" +
                 "username = 'contrast_admin'\n" +
                 "apiKey = '' \n " +
@@ -158,7 +158,7 @@ class ContrastTaskTests {
     public void testInstallTaskInvalidConfigurationNoAppId() {
 
         String buildFileContent = (getBuildScriptDependencies() +
-                "apply plugin: 'contrastplugin' \n " +
+                "apply plugin: 'com.contrastsecurity.contrastplugin' \n " +
                 "contrastConfiguration { \n" +
                 "username = 'contrast_admin'\n" +
                 "apiKey = '' \n " +
@@ -183,7 +183,7 @@ class ContrastTaskTests {
     public void testInstallTaskInvalidConfigurationNoServerName() {
 
         String buildFileContent = (getBuildScriptDependencies() +
-                "apply plugin: 'contrastplugin' \n " +
+                "apply plugin: 'com.contrastsecurity.contrastplugin' \n " +
                 "contrastConfiguration { \n" +
                 "username = 'contrast_admin'\n" +
                 "apiKey = '' \n " +
