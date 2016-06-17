@@ -6,24 +6,22 @@ import org.junit.Test
 
 import static org.junit.Assert.assertTrue
 
-/**
- * Created by donaldpropst on 6/9/16.
- */
+
 class ContrastPluginTest {
 
     //Ensures that the plugin is applicable
     @Test
     public void contrastPluginAddPlugin(){
         Project project = ProjectBuilder.builder().build()
-        project.pluginManager.apply "contrastplugin"
-        assertTrue(project.getPlugins().hasPlugin("contrastplugin"))
+        project.pluginManager.apply "com.contrastsecurity.contrastplugin"
+        assertTrue(project.getPlugins().hasPlugin("com.contrastsecurity.contrastplugin"))
     }
 
     //Ensures that the plugin allows the contrastInstall task to be called
     @Test
     public void contrastPluginAddsInstallTask() {
         Project project = ProjectBuilder.builder().build()
-        project.pluginManager.apply "contrastplugin"
+        project.pluginManager.apply "com.contrastsecurity.contrastplugin"
         project.afterEvaluate {
             assertTrue(project.tasks.getByName("contrastInstall") instanceof InstallContrastAgent)
         }
@@ -33,7 +31,7 @@ class ContrastPluginTest {
     @Test
     public void contrastPluginAddsVerifyTask(){
         Project project = ProjectBuilder.builder().build()
-        project.pluginManager.apply "contrastplugin"
+        project.pluginManager.apply "com.contrastsecurity.contrastplugin"
         project.afterEvaluate {
             assertTrue(project.tasks.getByName("contrastVerify") instanceof VerifyContrast)
         }
@@ -43,7 +41,7 @@ class ContrastPluginTest {
     @Test
     public void contrastPluginEnablesContrastConfigurationExtension(){
         Project project = ProjectBuilder.builder().build()
-        project.pluginManager.apply "contrastplugin"
+        project.pluginManager.apply "com.contrastsecurity.contrastplugin"
         assertTrue(project.getExtensions().getByName("contrastConfiguration") instanceof ContrastPluginExtension)
 
     }

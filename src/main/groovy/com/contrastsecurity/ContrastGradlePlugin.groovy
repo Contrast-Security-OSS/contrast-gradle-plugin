@@ -1,7 +1,3 @@
-/**
- * Created by donaldpropst on 6/7/16.
- */
-
 package com.contrastsecurity
 
 import com.contrastsecurity.sdk.ContrastSDK
@@ -10,16 +6,14 @@ import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-/**
- * Created by donaldpropst on 6/7/16.
- */
+
 class ContrastGradlePlugin implements Plugin<Project> {
 
     static ContrastPluginExtension extension;
     static Date verifyDateTime;
     static ContrastSDK contrastSDK;
 
-    private final String EXTENSION_NAME = "contrastConfiguration"
+    private static final String EXTENSION_NAME = "contrastConfiguration"
 
     @Override
     public void apply(Project target) {
