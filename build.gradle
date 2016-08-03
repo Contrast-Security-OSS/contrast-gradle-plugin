@@ -31,7 +31,7 @@ repositories {
 dependencies {
     compile localGroovy()
     compile gradleApi()
-    compile group: "com.contrastsecurity", name: "contrast-sdk-java", version:"2.1.0"
+    compile group: "com.contrastsecurity", name: "contrast-sdk-java", version:"2.1.1"
 
     testCompile gradleTestKit()
     testCompile group: "junit", name: "junit", version: "4.11"
