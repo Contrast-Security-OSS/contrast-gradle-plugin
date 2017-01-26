@@ -2,7 +2,9 @@ package com.contrastsecurity
 
 import com.contrastsecurity.exceptions.UnauthorizedException
 import com.contrastsecurity.http.FilterForm
+import com.contrastsecurity.http.RuleSeverity
 import com.contrastsecurity.http.ServerFilterForm
+import com.contrastsecurity.http.TraceFilterForm
 import com.contrastsecurity.models.Application
 import com.contrastsecurity.models.Applications
 import com.contrastsecurity.models.Servers
@@ -16,8 +18,8 @@ import org.gradle.api.tasks.TaskAction
 
 class VerifyContrast extends DefaultTask {
 
-    private ContrastPluginExtension extension 
-    private ContrastSDK contrast 
+    private ContrastPluginExtension extension
+    private ContrastSDK contrast
     //
 
     @TaskAction
@@ -27,23 +29,24 @@ class VerifyContrast extends DefaultTask {
         verifyForVulnerabilities()
     }
 
-    public void verifyForVulnerabilities(){
+    public void verifyForVulnerabilities() {
         println "Checking for new vulnerabilities..."
 
         String applicationId = getApplicationId(contrast, extension.appName)
 
         long serverId = getServerId(contrast, applicationId)
 
-        FilterForm form = new FilterForm() 
-        form.setSeverities(getSeverityList(extension.minSeverity)) 
-        form.setStartDate(ContrastGradlePlugin.verifyDateTime) 
+        TraceFilterForm form = new TraceFilterForm();
+        form.setSeverities(getSeverityList(extension.minSeverity))
+        form.setStartDate(ContrastGradlePlugin.verifyDateTime)
+        form.setServerIds(Arrays.asList(serverId));
 
-        println("Sending vulnerability request to TeamServer.") 
+        println("Sending vulnerability request to TeamServer.")
 
-        Traces traces 
+        Traces traces
 
         try {
-            traces = contrast.getTracesWithFilter(extension.orgUuid, applicationId, "servers", Long.toString(serverId), form) 
+            traces = contrast.getTraces(extension.orgUuid, applicationId, form);
         } catch (IOException e) {
             throw new GradleException("Unable to retrieve the traces.", e)
         } catch (UnauthorizedException e) {
@@ -58,10 +61,10 @@ class VerifyContrast extends DefaultTask {
 
             throw new GradleException("Your application is vulnerable. Please see the above report for new vulnerabilities.")
         } else {
-            println("No new vulnerabilities were found!") 
+            println("No new vulnerabilities were found!")
         }
 
-        println("Finished verifying your application.") 
+        println("Finished verifying your application.")
     }
 
     /** Retrieves the server id by server name
@@ -72,28 +75,28 @@ class VerifyContrast extends DefaultTask {
      * @throws GradleException
      */
     private long getServerId(ContrastSDK sdk, String applicationId) throws GradleException {
-        ServerFilterForm serverFilterForm = new ServerFilterForm() 
-        serverFilterForm.setApplicationIds(Arrays.asList(applicationId)) 
-        serverFilterForm.setQ(extension.serverName) 
+        ServerFilterForm serverFilterForm = new ServerFilterForm()
+        serverFilterForm.setApplicationIds(Arrays.asList(applicationId))
+        serverFilterForm.setQ(extension.serverName)
 
-        Servers servers 
-        long serverId 
+        Servers servers
+        long serverId
 
         try {
-            servers = sdk.getServersWithFilter(extension.orgUuid, serverFilterForm) 
+            servers = sdk.getServersWithFilter(extension.orgUuid, serverFilterForm)
         } catch (IOException e) {
-            throw new GradleException("Unable to retrieve the servers.", e) 
+            throw new GradleException("Unable to retrieve the servers.", e)
         } catch (UnauthorizedException e) {
-            throw new GradleException("Unable to connect to TeamServer.", e) 
+            throw new GradleException("Unable to connect to TeamServer.", e)
         }
 
         if (!servers.getServers().isEmpty()) {
-            serverId = servers.getServers().get(0).getServerId() 
+            serverId = servers.getServers().get(0).getServerId()
         } else {
-            throw new GradleException("Server with name '" + extension.serverName + "' not found.") 
+            throw new GradleException("Server with name '" + extension.serverName + "' not found.")
         }
 
-        return serverId 
+        return serverId
     }
 
     /** Retrieves the application id by application name  else null
@@ -105,23 +108,23 @@ class VerifyContrast extends DefaultTask {
      */
     private String getApplicationId(ContrastSDK sdk, String applicationName) throws GradleException {
 
-        Applications applications 
+        Applications applications
 
         try {
-            applications = sdk.getApplications(extension.orgUuid) 
+            applications = sdk.getApplications(extension.orgUuid)
         } catch (IOException e) {
-            throw new GradleException("Unable to retrieve the applications.", e) 
+            throw new GradleException("Unable to retrieve the applications.", e)
         } catch (UnauthorizedException e) {
-            throw new GradleException("Unable to connect to TeamServer.", e) 
+            throw new GradleException("Unable to connect to TeamServer.", e)
         }
 
         for (Application application : applications.getApplications()) {
             if (applicationName.equals(application.getName())) {
-                return application.getId() 
+                return application.getId()
             }
         }
 
-        throw new GradleException("Application with name '" + applicationName + "' not found.") 
+        throw new GradleException("Application with name '" + applicationName + "' not found.")
     }
 
     /**
@@ -130,18 +133,18 @@ class VerifyContrast extends DefaultTask {
      * @return String report
      */
     private String generateTraceReport(Trace trace) {
-        StringBuilder sb = new StringBuilder() 
-        sb.append("Trace: ") 
-        sb.append(trace.getTitle()) 
-        sb.append("\nTrace Uuid: ") 
-        sb.append(trace.getUuid()) 
-        sb.append("\nTrace Severity: ") 
-        sb.append(trace.getSeverity()) 
-        sb.append("\nTrace Likelihood: ") 
-        sb.append(trace.getLikelihood()) 
-        sb.append("\n") 
+        StringBuilder sb = new StringBuilder()
+        sb.append("Trace: ")
+        sb.append(trace.getTitle())
+        sb.append("\nTrace Uuid: ")
+        sb.append(trace.getUuid())
+        sb.append("\nTrace Severity: ")
+        sb.append(trace.getSeverity())
+        sb.append("\nTrace Likelihood: ")
+        sb.append(trace.getLikelihood())
+        sb.append("\n")
 
-        return sb.toString() 
+        return sb.toString()
     }
 
     /**
@@ -150,10 +153,19 @@ class VerifyContrast extends DefaultTask {
      * @param severity include severity to filter with severity list with
      * @return list of severity strings
      */
-    private static List<String> getSeverityList(String severity) {
-        return SEVERITIES.subList(SEVERITIES.indexOf(severity), SEVERITIES.size()) 
+    private static EnumSet<RuleSeverity> getSeverityList(String severity) {
+
+        List<String> serverityList = SEVERITIES.subList(SEVERITIES.indexOf(severity), SEVERITIES.size());
+
+        List<RuleSeverity> ruleSeverities = new ArrayList<RuleSeverity>();
+
+        for (String severityToAdd : serverityList) {
+            ruleSeverities.add(RuleSeverity.valueOf(severityToAdd));
+        }
+
+        return EnumSet.copyOf(ruleSeverities);
     }
 
     // Severity levels
-    private static final List<String> SEVERITIES = Arrays.asList("Note", "Low", "Medium", "High", "Critical") 
+    private static final List<String> SEVERITIES = Arrays.asList("Note", "Low", "Medium", "High", "Critical")
 }
