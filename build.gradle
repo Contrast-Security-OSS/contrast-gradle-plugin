@@ -47,7 +47,7 @@ uploadArchives {
 
 
 pluginBundle {
-    website = "http://contrastsecurity.com"
+    website = "https://contrastsecurity.com"
     vcsUrl = "http://github.com/Contrast-Security-OSS/contrast-gradle-plugin"
     description = "Gradle plugin for Contrast Security, enables the installation of the Contrast Java Agent, connection to TeamServer, and verifying applications for new vulnerabilities."
     tags = ["Contrast", "Security"]

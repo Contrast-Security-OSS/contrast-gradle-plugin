@@ -1,5 +1,7 @@
 package com.contrastsecurity
 
+import com.contrastsecurity.http.RuleSeverity
+import com.google.common.base.Verify
 import org.apache.maven.execution.BuildFailure
 import org.gradle.BuildResult
 import org.gradle.api.Project
@@ -201,6 +203,19 @@ class ContrastTaskTests {
                 .withArguments("contrastInstall")
                 .build();
         assertEquals(result.task(":contrastInstall").getOutcome(), FAILED);
+    }
+
+    @Test
+    public void enumSet() {
+
+        EnumSet<RuleSeverity> severities = VerifyContrast.getSeverityList("Low");
+        assertEquals(severities.contains(RuleSeverity.NOTE), false);
+        assertEquals(severities.contains(RuleSeverity.LOW), true);
+        assertEquals(severities.contains(RuleSeverity.MEDIUM), true);
+        assertEquals(severities.contains(RuleSeverity.HIGH), true);
+        assertEquals(severities.contains(RuleSeverity.CRITICAL), true);
+
+
     }
 
 

@@ -153,14 +153,20 @@ class VerifyContrast extends DefaultTask {
      * @param severity include severity to filter with severity list with
      * @return list of severity strings
      */
-    private static EnumSet<RuleSeverity> getSeverityList(String severity) {
-
-        List<String> serverityList = SEVERITIES.subList(SEVERITIES.indexOf(severity), SEVERITIES.size());
+    public static EnumSet<RuleSeverity> getSeverityList(String severity) {
 
         List<RuleSeverity> ruleSeverities = new ArrayList<RuleSeverity>();
-
-        for (String severityToAdd : serverityList) {
-            ruleSeverities.add(RuleSeverity.valueOf(severityToAdd));
+        switch(severity){
+            case "Note":
+                ruleSeverities.add(RuleSeverity.NOTE);
+            case "Low":
+                ruleSeverities.add(RuleSeverity.LOW);
+            case "Medium":
+                ruleSeverities.add(RuleSeverity.MEDIUM);
+            case "High":
+                ruleSeverities.add(RuleSeverity.HIGH);
+            case "Critical":
+                ruleSeverities.add(RuleSeverity.CRITICAL);
         }
 
         return EnumSet.copyOf(ruleSeverities);
