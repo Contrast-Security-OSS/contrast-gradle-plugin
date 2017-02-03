@@ -1,5 +1,5 @@
 group "com.contrastsecurity"
-version "1.0-SNAPSHOT"
+version "1.1.0"
 
 apply plugin: "groovy"
 apply plugin: "maven"
@@ -31,7 +31,7 @@ repositories {
 dependencies {
     compile localGroovy()
     compile gradleApi()
-    compile group: "com.contrastsecurity", name: "contrast-sdk-java", version:"2.1.0"
+    compile group: "com.contrastsecurity", name: "contrast-sdk-java", version:"2.2"
 
     testCompile gradleTestKit()
     testCompile group: "junit", name: "junit", version: "4.11"
@@ -49,7 +49,7 @@ uploadArchives {
 pluginBundle {
     website = "http://contrastsecurity.com"
     vcsUrl = "http://github.com/Contrast-Security-OSS/contrast-gradle-plugin"
-    description = "Gradle plugin for Contrast Security, enables the installation of the Contrast Java Agent, connection to TeamServer, and verifying applications against new vulnerabilities"
+    description = "Gradle plugin for Contrast Security, enables the installation of the Contrast Java Agent, connection to TeamServer, and verifying applications for new vulnerabilities."
     tags = ["Contrast", "Security"]
 
     plugins {
