@@ -25,7 +25,7 @@ Repository for the Contrast Gradle plugin. This plugin will allow for a Contrast
 * Install Gradle via Homebrew ```brew install gradle ```
 
 
-* Now that we have all of our dependencies we can setup our project.  The easiest way to setup a project is to clone this sample application.  This application has been migrated from Maven to Gradle, and relies on MongoDB, so we will install that and setup it's database path.
+* The easiest way to setup a project is to clone out sample application.  This application has been migrated from Maven to Gradle, and relies on MongoDB, so we will install that and setup it's database path.
 ```
 git clone https://github.com/Contrast-Security-OSS/Contrast-Sample-Gradle-Application.git
 brew install mongodb
@@ -33,7 +33,7 @@ sudo mkdir -p /data/db
 brew services start mongodb
 ```
 
-* Now we have an application that is ready to run.  Open up the Contrast-Sample-Gradle-Application/build.gradle file.  Scroll to the very bottom and you should find the following contrastConfiguration. All of these values can be found in TeamServer already **except** for appName and serverName.
+* Open up the Contrast-Sample-Gradle-Application/build.gradle file.  Scroll to the very bottom and you should find the following contrastConfiguration. All of these values can be found in TeamServer already **except** for appName and serverName.
 ```
 contrastConfiguration {
     username = "username"
@@ -52,13 +52,16 @@ cd path/to/Contrast-Sample-Gradle-Application
 gradle build contrastInstall
 ```
 
-* The next step is to run the application with the java agent.  We will want to check 2 things **after** this step. 1) That the test application is running at `http://localhost:8080` & 2) that the application shows up within TeamServer.
+* The next step is to run the application with the java agent.
 ```
 cd path/to/Contrast-Sample-Gradle-Application/build
 java -javaagent:contrast.jar -Dcontrast.appname=mytestapp -Dcontrast.server=mytestserver -jar libs/Contrast-Sample-Gradle-Application-0.0.1-SNAPSHOT.jar
 ```
-* In your TeamServer verify that the application with the appname specified in the command above shows up.
-* In the VehicleMPG projects build.gradle we will now edit the contrastConfiguration to specify the appName and serverName that we setup in the previous step.
+Now, verify that your application is running here: That the test application is running at http://localhost:8080
+
+Next, verify that the applicaiton shows up on Teamserver.
+
+* In the VehicleMPG projects build.gradle we will now edit the contrastConfiguration to specify the appName and serverName from Teamserver
 ```
 contrastConfiguration {
     username = "alreadySetup"
@@ -71,13 +74,12 @@ contrastConfiguration {
     minSeverity = "Medium"
 }
 ```
-*  We can now run the verification task at any time to check for vulnerabilties.
+*  Run the verification task at any time to check for vulnerabilties.
 ```
 gradle build contrastVerify -x test
 ```
-* That's it. An application has been onboarded from start to finish and vulnerabilities can be checked at any point.
 
-## Configuration
+## Configuration Reference
 ```
 buildscript {
   repositories {
@@ -103,4 +105,16 @@ contrastConfiguration {
 }
 ```
 
+## Local Development and Testing
 
+To build and test the Gradle plugin locally:
+
+* `gradle build`
+
+To build an 'uber jar'
+
+* `gradle shadowJar`
+
+To build and 'uber jar' and install into Maven local:
+
+* `gradle publishToMavenLocal`
