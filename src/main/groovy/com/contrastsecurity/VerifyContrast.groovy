@@ -30,7 +30,7 @@ class VerifyContrast extends DefaultTask {
     }
 
     public void verifyForVulnerabilities() {
-        println "Checking for new vulnerabilities..."
+        logger.debug("Checking for new vulnerabilities...")
 
         String applicationId = getApplicationId(contrast, extension.appName)
 
@@ -41,7 +41,7 @@ class VerifyContrast extends DefaultTask {
         form.setStartDate(ContrastGradlePlugin.verifyDateTime)
         form.setServerIds(Arrays.asList(serverId));
 
-        println("Sending vulnerability request to TeamServer.")
+        logger.debug("Sending vulnerability request to TeamServer.")
 
         Traces traces
 
@@ -54,17 +54,17 @@ class VerifyContrast extends DefaultTask {
         }
 
         if (traces != null && traces.getCount() > 0) {
-            println(traces.getCount() + " new vulnerability(s) were found! Printing vulnerability report.")
+            logger.debug(traces.getCount() + " new vulnerability(s) were found! Printing vulnerability report.")
             for (Trace trace : traces.getTraces()) {
-                println(generateTraceReport(trace))
+                logger.debug(generateTraceReport(trace))
             }
 
             throw new GradleException("Your application is vulnerable. Please see the above report for new vulnerabilities.")
         } else {
-            println("No new vulnerabilities were found!")
+            logger.debug("No new vulnerabilities were found!")
         }
 
-        println("Finished verifying your application.")
+        logger.debug("Finished verifying your application.")
     }
 
     /** Retrieves the server id by server name

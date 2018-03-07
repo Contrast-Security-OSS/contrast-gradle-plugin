@@ -29,7 +29,7 @@ class InstallContrastAgent extends DefaultTask {
         File agentFile
 
         if (StringUtils.isEmpty(extension.jarPath)) {
-            println "No jar path was configured.  Downloading the latest contrast.jar..."
+            logger.debug("No jar path was configured.  Downloading the latest contrast.jar...")
             try {
                 javaAgent = connection.getAgent(AgentType.JAVA, extension.orgUuid);
             } catch (IOException e) {
@@ -47,16 +47,16 @@ class InstallContrastAgent extends DefaultTask {
                 throw new GradleException("Unable to save the latest java agent.")
             }
 
-            println "Saved the latest java agent to " + agentFile.getAbsolutePath()
+            logger.debug("Saved the latest java agent to " + agentFile.getAbsolutePath())
 
         } else {
-            println "Using configured jar path " + extension.jarPath
+            logger.debug("Using configured jar path ${extension.jarPath}")
             agentFile = new File(extension.jarPath)
 
             if (!agentFile.exists()) {
-                throw new GradleException("Unable to load the local Java agent from " + extension.jarPath)
+                throw new GradleException("Unable to load the local Java agent from ${extension.jarPath}")
             }
-            println ("Loaded the latest java agent from " + extension.jarPath)
+            logger.debug("Loaded the latest java agent from ${extension.jarPath}")
 
         }
 
