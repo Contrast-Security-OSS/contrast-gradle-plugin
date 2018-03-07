@@ -13,7 +13,7 @@ class ContrastGradlePlugin implements Plugin<Project> {
     static Date verifyDateTime;
     static ContrastSDK contrastSDK;
 
-    private static final String EXTENSION_NAME = "contrastConfiguration"
+    private static final String EXTENSION_NAME = 'contrastConfiguration'
 
     @Override
     public void apply(Project target) {
@@ -23,16 +23,16 @@ class ContrastGradlePlugin implements Plugin<Project> {
 
          target.afterEvaluate {
              contrastSDK = connectToTeamServer()
-             target.task("contrastInstall", type: InstallContrastAgent) {
-                 logger.debug("Successfully authenticated to Teamserver.")
-                 logger.debug("Attempting to install the Java agent.")
+             target.task('contrastInstall', type: InstallContrastAgent) {
+                 logger.debug('Successfully authenticated to Teamserver.')
+                 logger.debug('Attempting to install the Java agent.')
              }
-             target.task("contrastVerify", type: VerifyContrast)
+             target.task('contrastVerify', type: VerifyContrast)
         }
     }
 
     ContrastSDK connectToTeamServer() throws GradleException{
-        logger.debug("Attempting to connect to configured TeamServer...")
+        logger.debug('Attempting to connect to configured TeamServer...')
         try {
             if (!StringUtils.isEmpty(extension.apiUrl)) {
                 return new ContrastSDK(extension.username, extension.serviceKey, extension.apiKey, extension.apiUrl);
@@ -40,7 +40,7 @@ class ContrastGradlePlugin implements Plugin<Project> {
                 return new ContrastSDK(extension.username, extension.serviceKey, extension.apiKey);
             }
         } catch (IllegalArgumentException e) {
-            throw new GradleException("Unable to connect to TeamServer. Please check your Gradle settings.")
+            throw new GradleException('Unable to connect to TeamServer. Please check your Gradle settings.')
         }
 
     }

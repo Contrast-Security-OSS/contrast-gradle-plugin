@@ -13,7 +13,7 @@ import org.gradle.api.tasks.TaskAction
 
 class InstallContrastAgent extends DefaultTask {
 
-    private static final String AGENT_NAME = "contrast.jar"
+    private static final String AGENT_NAME = 'contrast.jar'
     private ContrastPluginExtension extension
 
     @TaskAction
@@ -29,13 +29,13 @@ class InstallContrastAgent extends DefaultTask {
         File agentFile
 
         if (StringUtils.isEmpty(extension.jarPath)) {
-            logger.debug("No jar path was configured.  Downloading the latest contrast.jar...")
+            logger.debug('No jar path was configured.  Downloading the latest contrast.jar...')
             try {
                 javaAgent = connection.getAgent(AgentType.JAVA, extension.orgUuid);
             } catch (IOException e) {
-                throw new GradleException("Unable to download the latest java agent.")
+                throw new GradleException('Unable to download the latest java agent.')
             } catch (UnauthorizedException e) {
-                throw new GradleException("Unable to retrieve the latest java agent due to authorization.")
+                throw new GradleException('Unable to retrieve the latest java agent due to authorization.')
             }
 
             // Save the jar to the 'build' directory
@@ -44,10 +44,10 @@ class InstallContrastAgent extends DefaultTask {
             try {
                 FileUtils.writeByteArrayToFile(agentFile, javaAgent);
             } catch (IOException e) {
-                throw new GradleException("Unable to save the latest java agent.")
+                throw new GradleException('Unable to save the latest java agent.')
             }
 
-            logger.debug("Saved the latest java agent to " + agentFile.getAbsolutePath())
+            logger.debug("Saved the latest java agent to ${agentFile.absolutePath}")
 
         } else {
             logger.debug("Using configured jar path ${extension.jarPath}")
