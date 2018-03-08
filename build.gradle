@@ -17,6 +17,7 @@ buildscript {
     dependencies {
         classpath "com.gradle.publish:plugin-publish-plugin:0.9.4"
         classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.2'
+
     }
 }
 
@@ -46,6 +47,8 @@ dependencies {
 
     testCompile gradleTestKit()
     testCompile group: "junit", name: "junit", version: "4.11"
+    testCompile "com.google.guava:guava:23+"
+    testCompile "org.apache.maven.plugins:maven-compiler-plugin:3.7.0"
 }
 
 uploadArchives {
