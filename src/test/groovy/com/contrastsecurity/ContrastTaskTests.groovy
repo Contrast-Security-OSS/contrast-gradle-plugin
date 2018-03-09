@@ -1,8 +1,6 @@
 package com.contrastsecurity
 
 import com.contrastsecurity.http.RuleSeverity
-import com.google.common.base.Verify
-import org.apache.maven.execution.BuildFailure
 import org.gradle.BuildResult
 import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder

@@ -1,50 +1,46 @@
 package com.contrastsecurity
 
 import com.contrastsecurity.sdk.ContrastSDK
-import org.apache.commons.lang.StringUtils
-import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
+import org.gradle.language.base.plugins.LifecycleBasePlugin
 
 
 class ContrastGradlePlugin implements Plugin<Project> {
 
-    static ContrastPluginExtension extension;
-    static Date verifyDateTime;
     static ContrastSDK contrastSDK;
 
-    private static final String EXTENSION_NAME = "contrastConfiguration"
+    private static final String EXTENSION_NAME = 'contrastConfiguration'
 
     @Override
     public void apply(Project target) {
-         //allows for client to define their settings in their projects build.gradle
-         target.extensions.create(EXTENSION_NAME, ContrastPluginExtension)
-         extension = target.getExtensions().getByName(EXTENSION_NAME) as ContrastPluginExtension;
+        //allows for client to define their settings in their projects build.gradle
+        ContrastPluginExtension extension = target.extensions.create(EXTENSION_NAME, ContrastPluginExtension)
+        extension.appName = target.rootProject.name
+        extension.serverName = InetAddress.localHost.hostName
 
-         target.afterEvaluate {
-             contrastSDK = connectToTeamServer()
-             target.task("contrastInstall", type: InstallContrastAgent) {
-                 println "Successfully authenticated to Teamserver. \n Attempting to install the Java agent."
-             }
-             target.task("contrastVerify", type: VerifyContrast)
+        Task contrastLogin = target.tasks.create(name: 'contrastLogin', type: ConnectToContrast)
+
+        Task contrastInstall = target.tasks.create(name: 'contrastInstall', type: InstallContrastAgent) {
+            description = 'Installs a Contrast agent in your working copy.'
         }
-    }
+        
+        Task contrastVerify = target.tasks.create(name: 'contrastVerify', type: VerifyContrast) {
+            dependsOn = [contrastLogin]
+            description = 'Checks for new application vulnerabilities.'
+            group = LifecycleBasePlugin.VERIFICATION_GROUP
+        }
 
-    ContrastSDK connectToTeamServer() throws GradleException{
-        println "Attempting to connect to configured TeamServer..."
-        try {
-            if (!StringUtils.isEmpty(extension.apiUrl)) {
-                return new ContrastSDK(extension.username, extension.serviceKey, extension.apiKey, extension.apiUrl);
-            } else {
-                return new ContrastSDK(extension.username, extension.serviceKey, extension.apiKey);
+        target.afterEvaluate {
+            if (!extension.jarPath?.trim()) {
+                Task contrastDownload = target.tasks.create(name: 'contrastDownload', type: DownloadContrastAgent) {
+                    dependsOn = [contrastLogin]
+                    description = 'Downloads the latest version of the Contrast agent.'
+                }
+                extension.jarPath = contrastDownload.agentFile.absolutePath
+                contrastInstall.dependsOn = [contrastDownload]
             }
-        } catch (IllegalArgumentException e) {
-            throw new GradleException("Unable to connect to TeamServer. Please check your Gradle settings.")
         }
-
     }
 }
-
-
-
-

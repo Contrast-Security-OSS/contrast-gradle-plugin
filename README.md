@@ -15,9 +15,9 @@ Repository for the Contrast Gradle plugin. This plugin will allow for a Contrast
 | serviceKey  | True     |         | Service Key found in Organization Settings              |
 | apiKey      | True     |         | Api Key found in Organization Settings                  |
 | orgUuid     | True     |         | Organization Uuid found in Organization Settings        |
-| appId       | True     |         | Application Id of application                           |
+| appName     | False    |         | Application name                                        |
 | apiUrl      | True     |         | API Url to your TeamServer instance                     |
-| serverName  | True     |         | Name of server you set with -Dcontrast.server           |
+| serverName  | False    |         | Name of server you set with -Dcontrast.server           |
 | minSeverity | False    | Medium  | Minimum severity level to verify                        |
 | jarPath     | False    |         | Path to contrast.jar if you already have one downloaded |
 
