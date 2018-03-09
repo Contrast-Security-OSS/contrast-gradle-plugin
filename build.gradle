@@ -79,4 +79,5 @@ pluginBundle {
 release {
     failOnCommitNeeded = true
     failOnUnversionedFiles = true
+    failOnPublishNeeded = false
 }
