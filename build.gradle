@@ -1,5 +1,5 @@
 group "com.contrastsecurity"
-version "1.2.0-SNAPSHOT"
+version project.properties['version']
 
 apply plugin: "groovy"
 apply plugin: "maven"
@@ -80,4 +80,5 @@ release {
     failOnCommitNeeded = true
     failOnUnversionedFiles = true
     failOnPublishNeeded = false
+    buildTasks = ['build']
 }
