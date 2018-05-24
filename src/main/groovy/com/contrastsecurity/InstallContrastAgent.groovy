@@ -5,13 +5,17 @@ import org.gradle.api.GradleException
 import org.gradle.api.tasks.StopExecutionException
 import org.gradle.api.tasks.TaskAction
 
+import java.text.SimpleDateFormat
+
 
 class InstallContrastAgent extends DefaultTask {
 
     boolean ignoreFailures
 
     @TaskAction
-    def exec () {
+    def exec() {
+        ContrastGradlePlugin.appVersionQualifier = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
+
         ContrastPluginExtension extension = project.contrastConfiguration
 
         File agentFile = new File(extension.jarPath)
