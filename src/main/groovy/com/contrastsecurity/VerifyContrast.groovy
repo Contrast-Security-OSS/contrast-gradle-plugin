@@ -10,8 +10,6 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.tasks.TaskAction
 
-import java.text.SimpleDateFormat
-
 class VerifyContrast extends DefaultTask {
 
     @TaskAction
@@ -20,10 +18,6 @@ class VerifyContrast extends DefaultTask {
 
         ContrastSDK contrast = ContrastGradlePlugin.contrastSDK
         ContrastPluginExtension extension = project.contrastConfiguration
-
-        if (!ContrastGradlePlugin.appVersionQualifier) {
-            ContrastGradlePlugin.appVersionQualifier = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
-        }
 
         String applicationId = getApplicationId(contrast, extension.orgUuid, extension.appName)
 
