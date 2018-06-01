@@ -23,17 +23,17 @@ class VerifyContrast extends DefaultTask {
 
         long serverId = getServerId(contrast, extension.orgUuid, applicationId, extension.serverName)
 
-        TraceFilterForm form = new TraceFilterForm();
+        TraceFilterForm form = new TraceFilterForm()
         form.setSeverities(getSeverityList(extension.minSeverity))
-        form.setAppVersionTags(Collections.singletonList(getAppVersion(extension.appName, ContrastGradlePlugin.appVersionQualifier)))
-        form.setServerIds(Arrays.asList(serverId));
+        form.setAppVersionTags(Collections.singletonList(ContrastGradlePlugin.getAppVersion(extension.appName, ContrastGradlePlugin.appVersionQualifier)))
+        form.setServerIds(Arrays.asList(serverId))
 
         logger.debug('Requesting vulnerability report from TeamServer')
 
         Traces traces
 
         try {
-            traces = contrast.getTraces(extension.orgUuid, applicationId, form);
+            traces = contrast.getTraces(extension.orgUuid, applicationId, form)
         } catch (IOException e) {
             throw new GradleException('Unable to retrieve the traces.', e)
         } catch (UnauthorizedException e) {
@@ -64,7 +64,7 @@ class VerifyContrast extends DefaultTask {
      * @return Long id of the server
      * @throws GradleException
      */
-    private long getServerId(ContrastSDK sdk, String orgUuid, String applicationId, String serverName) throws GradleException {
+    private static long getServerId(ContrastSDK sdk, String orgUuid, String applicationId, String serverName) throws GradleException {
         ServerFilterForm serverFilterForm = new ServerFilterForm()
         serverFilterForm.setApplicationIds(Arrays.asList(applicationId))
         serverFilterForm.setQ(serverName)
@@ -94,7 +94,7 @@ class VerifyContrast extends DefaultTask {
      * @return String of the application
      * @throws GradleException
      */
-    private String getApplicationId(ContrastSDK sdk, String orgUuid, String applicationName) throws GradleException {
+    private static String getApplicationId(ContrastSDK sdk, String orgUuid, String applicationName) throws GradleException {
 
         Applications applications
 
@@ -107,7 +107,7 @@ class VerifyContrast extends DefaultTask {
         }
 
         for (Application application : applications.applications) {
-            if (applicationName.equals(application.name)) {
+            if (applicationName == application.name) {
                 return application.id
             }
         }
@@ -120,7 +120,7 @@ class VerifyContrast extends DefaultTask {
      * @param trace Trace object
      * @return String report
      */
-    private String generateTraceReport(Trace trace) {
+    private static String generateTraceReport(Trace trace) {
         StringBuilder sb = new StringBuilder()
         sb.append("Trace: ${trace.title}${System.lineSeparator()}")
         sb.append("Trace Uuid: ${trace.uuid}${System.lineSeparator()}")
@@ -135,26 +135,22 @@ class VerifyContrast extends DefaultTask {
      * @param severity include severity to filter with severity list with
      * @return list of severity strings
      */
-    public static EnumSet<RuleSeverity> getSeverityList(String severity) {
+    static EnumSet<RuleSeverity> getSeverityList(String severity) {
 
-        List<RuleSeverity> ruleSeverities = new ArrayList<RuleSeverity>();
+        List<RuleSeverity> ruleSeverities = new ArrayList<RuleSeverity>()
         switch (severity) {
             case 'Note':
-                ruleSeverities.add(RuleSeverity.NOTE);
+                ruleSeverities.add(RuleSeverity.NOTE)
             case 'Low':
-                ruleSeverities.add(RuleSeverity.LOW);
+                ruleSeverities.add(RuleSeverity.LOW)
             case 'Medium':
-                ruleSeverities.add(RuleSeverity.MEDIUM);
+                ruleSeverities.add(RuleSeverity.MEDIUM)
             case 'High':
-                ruleSeverities.add(RuleSeverity.HIGH);
+                ruleSeverities.add(RuleSeverity.HIGH)
             case 'Critical':
-                ruleSeverities.add(RuleSeverity.CRITICAL);
+                ruleSeverities.add(RuleSeverity.CRITICAL)
         }
 
-        return EnumSet.copyOf(ruleSeverities);
-    }
-
-    private String getAppVersion(String appName, String appVersionQualifier) {
-        return appName + "-" + appVersionQualifier;
+        return EnumSet.copyOf(ruleSeverities)
     }
 }

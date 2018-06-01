@@ -9,8 +9,8 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin
 
 class ContrastGradlePlugin implements Plugin<Project> {
 
-    static ContrastSDK contrastSDK;
-    static String appVersionQualifier;
+    static ContrastSDK contrastSDK
+    static String appVersionQualifier
 
     private static final String EXTENSION_NAME = 'contrastConfiguration'
 
@@ -43,5 +43,19 @@ class ContrastGradlePlugin implements Plugin<Project> {
                 contrastInstall.dependsOn = [contrastDownload]
             }
         }
+    }
+
+    protected static String getAppVersion(String appName, String appVersionQualifier) {
+        return appName + "-" + appVersionQualifier
+    }
+
+    protected static String buildArgLine(Project project) {
+
+        ContrastPluginExtension extension = project.contrastConfiguration
+        String appVersion = getAppVersion(extension.appName, appVersionQualifier)
+
+        String newArgLine = "-javaagent:${extension.jarPath} -Dcontrast.override.appname=${extension.appName} -Dcontrast.server=${extension.serverName} -Dcontrast.env=qa -Dcontrast.override.appversion=${appVersion}"
+
+        return newArgLine
     }
 }
