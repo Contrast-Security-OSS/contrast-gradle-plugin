@@ -10,6 +10,7 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin
 class ContrastGradlePlugin implements Plugin<Project> {
 
     static ContrastSDK contrastSDK;
+    static String appVersionQualifier;
 
     private static final String EXTENSION_NAME = 'contrastConfiguration'
 

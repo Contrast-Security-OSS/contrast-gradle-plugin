@@ -4,20 +4,13 @@ import com.contrastsecurity.exceptions.UnauthorizedException
 import com.contrastsecurity.http.RuleSeverity
 import com.contrastsecurity.http.ServerFilterForm
 import com.contrastsecurity.http.TraceFilterForm
-import com.contrastsecurity.models.Application
-import com.contrastsecurity.models.Applications
-import com.contrastsecurity.models.Servers
-import com.contrastsecurity.models.Trace
-import com.contrastsecurity.models.Traces
+import com.contrastsecurity.models.*
 import com.contrastsecurity.sdk.ContrastSDK
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.tasks.TaskAction
 
-
 class VerifyContrast extends DefaultTask {
-
-    Date startDate = new Date();
 
     @TaskAction
     def exec() {
@@ -32,7 +25,7 @@ class VerifyContrast extends DefaultTask {
 
         TraceFilterForm form = new TraceFilterForm();
         form.setSeverities(getSeverityList(extension.minSeverity))
-        form.setStartDate(startDate)
+        form.setAppVersionTags(Collections.singletonList(getAppVersion(extension.appName, ContrastGradlePlugin.appVersionQualifier)))
         form.setServerIds(Arrays.asList(serverId));
 
         logger.debug('Requesting vulnerability report from TeamServer')
@@ -145,7 +138,7 @@ class VerifyContrast extends DefaultTask {
     public static EnumSet<RuleSeverity> getSeverityList(String severity) {
 
         List<RuleSeverity> ruleSeverities = new ArrayList<RuleSeverity>();
-        switch(severity) {
+        switch (severity) {
             case 'Note':
                 ruleSeverities.add(RuleSeverity.NOTE);
             case 'Low':
@@ -159,5 +152,9 @@ class VerifyContrast extends DefaultTask {
         }
 
         return EnumSet.copyOf(ruleSeverities);
+    }
+
+    private String getAppVersion(String appName, String appVersionQualifier) {
+        return appName + "-" + appVersionQualifier;
     }
 }
