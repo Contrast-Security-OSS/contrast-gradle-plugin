@@ -4,6 +4,7 @@ import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Test
 
+import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertTrue
 
 
@@ -44,6 +45,24 @@ class ContrastPluginTest {
         project.pluginManager.apply "com.contrastsecurity.contrastplugin"
         assertTrue(project.getExtensions().getByName("contrastConfiguration") instanceof ContrastPluginExtension)
 
+    }
+
+
+    @Test
+    public void testBuildArgLine() {
+
+        Project project = ProjectBuilder.builder().build()
+        project.pluginManager.apply "com.contrastsecurity.contrastplugin"
+        project.contrastConfiguration.setJarPath("/demo/jar/path")
+        project.contrastConfiguration.setAppName("WebGoat")
+        project.contrastConfiguration.setServerName("linux")
+
+        ContrastGradlePlugin.appVersionQualifier = "1.0.0"
+
+        String argLine = ContrastGradlePlugin.buildArgLine(project)
+        String actualArgLine = "-javaagent:/demo/jar/path -Dcontrast.override.appname=WebGoat -Dcontrast.server=linux -Dcontrast.env=qa -Dcontrast.override.appversion=WebGoat-1.0.0"
+
+        assertEquals(argLine, actualArgLine)
     }
 
 }
