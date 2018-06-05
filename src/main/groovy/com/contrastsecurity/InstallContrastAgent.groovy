@@ -15,7 +15,7 @@ class InstallContrastAgent extends DefaultTask {
 
     @TaskAction
     def exec() {
-        ContrastGradlePlugin.appVersionQualifier = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
+        ContrastGradlePlugin.appVersionQualifier = computeAppVersionQualifier()
 
         addContrastArgLine()
 
@@ -29,6 +29,24 @@ class InstallContrastAgent extends DefaultTask {
         } else {
             throw new GradleException("Unable to load Java agent from ${extension.jarPath}")
         }
+    }
+
+    private String computeAppVersionQualifier() {
+        String travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
+        String circleBuildNum = System.getenv("CIRCLE_BUILD_NUM")
+
+        String appVersionQualifier = ""
+        if(travisBuildNumber != null) {
+            logger.info("Build is running in TravisCI. We'll use TRAVIS_BUILD_NUMBER [" + travisBuildNumber + "]")
+            appVersionQualifier = travisBuildNumber
+        } else if (circleBuildNum != null) {
+            logger.info("Build is running in CircleCI. We'll use CIRCLE_BUILD_NUM [" + circleBuildNum + "]")
+            appVersionQualifier = circleBuildNum
+        } else {
+            logger.info("No CI build number detected, we'll use current timestamp.")
+            appVersionQualifier = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
+        }
+        return appVersionQualifier
     }
 
     private void addContrastArgLine() {
@@ -50,6 +68,28 @@ class InstallContrastAgent extends DefaultTask {
             if (!argLineContainsContrastArgLine(property)) {
                 config.setProperty(jvmArgs, property + " " + ContrastGradlePlugin.buildArgLine(project))
                 layout.save(new FileWriter(gradleProperties, false))
+            } else {
+
+                // Replace app version in arg line with the new one
+                int ind = property.indexOf("-Dcontrast.override.appversion=")
+                if (ind != -1) {
+                    int indexOfAppVersionStart = ind + "-Dcontrast.override.appversion=".length()
+
+                    int indexOfAppVersionEnd = property.indexOf(" ", indexOfAppVersionStart)
+
+                    if (indexOfAppVersionEnd == -1) {
+                        indexOfAppVersionEnd = property.length()
+                    }
+                    String appVersion = property.substring(indexOfAppVersionStart, indexOfAppVersionEnd)
+
+                    ContrastPluginExtension extension = project.contrastConfiguration
+
+                    property = property.replace(appVersion, ContrastGradlePlugin.getAppVersion(extension.appName, ContrastGradlePlugin.appVersionQualifier))
+
+                    logger.quiet(ContrastGradlePlugin.appVersionQualifier)
+                    config.setProperty(jvmArgs, property)
+                    layout.save(new FileWriter(gradleProperties, false))
+                }
             }
         }
     }
