@@ -86,7 +86,6 @@ class InstallContrastAgent extends DefaultTask {
 
                     property = property.replace(appVersion, ContrastGradlePlugin.getAppVersion(extension.appName, ContrastGradlePlugin.appVersionQualifier))
 
-                    logger.quiet(ContrastGradlePlugin.appVersionQualifier)
                     config.setProperty(jvmArgs, property)
                     layout.save(new FileWriter(gradleProperties, false))
                 }
