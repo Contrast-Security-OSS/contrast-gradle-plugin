@@ -2,9 +2,24 @@
 
 Repository for the Contrast Gradle plugin. This plugin will allow for a Contrast Java agent to be downloaded and then ensure that there are no new vulnerabilities found.
 
+## Version 2
+New in 2.X version of the plugin:
+* Vulnerabilities are now filtered using an app version instead of a timestamp.
+* App version can be generated using $TRAVIS_BUILD_NUMBER or $CIRCLE_BUILD_NUM.
+
+## Documentation
+Always refer to Contrast's Open Docs site for the most up to date documentation: https://docs.contrastsecurity.com/tools-build.html#gradle
+
 ## Goals
 
-* `contrastInstall`: installs a Contrast Java agent to your local project
+* `contrastInstall`: installs a Contrast Java agent to your local project. 
+The plugin will edit org.gradle.jvmargs property in gradle.properties file to launch the JVM with the Contrast agent.
+An application version, by which the vulnerabilities are filtered, is generated during this task.
+We generate the app version as follows and in this order:
+    * If your build is running in TravisCI, we'll use appName-$TRAVIS_BUILD_NUMBER
+    * If your build is running in CircleCI, we'll use appName-$CIRCLE_BUILD_NUM
+    * If your build is running neither in TravisCI nor in CircleCI, we'll generate one in the following format: appName-yyyyMMddHHmm
+
 * `contrastVerify`: checks for new vulnerabilities in your web application
 
 ## Configuration Options
