@@ -6,6 +6,8 @@ import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.language.base.plugins.LifecycleBasePlugin
 
+import java.text.SimpleDateFormat
+
 
 class ContrastGradlePlugin implements Plugin<Project> {
 
@@ -57,5 +59,20 @@ class ContrastGradlePlugin implements Plugin<Project> {
         String newArgLine = "-javaagent:${extension.jarPath} -Dcontrast.override.appname=${extension.appName} -Dcontrast.server=${extension.serverName} -Dcontrast.env=qa -Dcontrast.override.appversion=${appVersion}"
 
         return newArgLine
+    }
+
+    static String computeAppVersionQualifier() {
+        String travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
+        String circleBuildNum = System.getenv("CIRCLE_BUILD_NUM")
+
+        String appVersionQualifier = ""
+        if(travisBuildNumber != null) {
+            appVersionQualifier = travisBuildNumber
+        } else if (circleBuildNum != null) {
+            appVersionQualifier = circleBuildNum
+        } else {
+            appVersionQualifier = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
+        }
+        return appVersionQualifier
     }
 }

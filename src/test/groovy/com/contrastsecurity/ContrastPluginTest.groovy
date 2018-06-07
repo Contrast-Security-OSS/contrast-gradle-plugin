@@ -4,6 +4,8 @@ import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Test
 
+import java.text.SimpleDateFormat
+
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertTrue
 
@@ -63,6 +65,26 @@ class ContrastPluginTest {
         String actualArgLine = "-javaagent:/demo/jar/path -Dcontrast.override.appname=WebGoat -Dcontrast.server=linux -Dcontrast.env=qa -Dcontrast.override.appversion=WebGoat-1.0.0"
 
         assertEquals(argLine, actualArgLine)
+    }
+
+    @Test
+    public void testComputeAppVersionQualifier() {
+
+        String travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
+        String circleBuildNum = System.getenv("CIRCLE_BUILD_NUM")
+
+        String actualAppVersionQualifier = ""
+        if(travisBuildNumber != null) {
+            actualAppVersionQualifier = travisBuildNumber
+        } else if (circleBuildNum != null) {
+            actualAppVersionQualifier = circleBuildNum
+        } else {
+            actualAppVersionQualifier = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
+        }
+
+        String appVersionQualifier = ContrastGradlePlugin.computeAppVersionQualifier()
+
+        assertEquals(appVersionQualifier, actualAppVersionQualifier)
     }
 
 }

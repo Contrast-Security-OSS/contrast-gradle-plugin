@@ -15,7 +15,7 @@ class InstallContrastAgent extends DefaultTask {
 
     @TaskAction
     def exec() {
-        ContrastGradlePlugin.appVersionQualifier = computeAppVersionQualifier()
+        ContrastGradlePlugin.appVersionQualifier = ContrastGradlePlugin.computeAppVersionQualifier()
 
         addContrastArgLine()
 
@@ -29,24 +29,6 @@ class InstallContrastAgent extends DefaultTask {
         } else {
             throw new GradleException("Unable to load Java agent from ${extension.jarPath}")
         }
-    }
-
-    private String computeAppVersionQualifier() {
-        String travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
-        String circleBuildNum = System.getenv("CIRCLE_BUILD_NUM")
-
-        String appVersionQualifier = ""
-        if(travisBuildNumber != null) {
-            logger.info("Build is running in TravisCI. We'll use TRAVIS_BUILD_NUMBER [" + travisBuildNumber + "]")
-            appVersionQualifier = travisBuildNumber
-        } else if (circleBuildNum != null) {
-            logger.info("Build is running in CircleCI. We'll use CIRCLE_BUILD_NUM [" + circleBuildNum + "]")
-            appVersionQualifier = circleBuildNum
-        } else {
-            logger.info("No CI build number detected, we'll use current timestamp.")
-            appVersionQualifier = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
-        }
-        return appVersionQualifier
     }
 
     private void addContrastArgLine() {
