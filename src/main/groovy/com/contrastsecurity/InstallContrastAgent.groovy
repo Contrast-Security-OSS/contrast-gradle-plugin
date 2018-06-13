@@ -15,7 +15,7 @@ class InstallContrastAgent extends DefaultTask {
 
     @TaskAction
     def exec() {
-        ContrastGradlePlugin.appVersionQualifier = ContrastGradlePlugin.computeAppVersionQualifier()
+        ContrastGradlePlugin.appVersionQualifier = ContrastGradlePlugin.computeAppVersionQualifier(System.getenv("TRAVIS_BUILD_NUMBER"), System.getenv("CIRCLE_BUILD_NUM"))
 
         addContrastArgLine()
 
@@ -50,27 +50,6 @@ class InstallContrastAgent extends DefaultTask {
             if (!argLineContainsContrastArgLine(property)) {
                 config.setProperty(jvmArgs, property + " " + ContrastGradlePlugin.buildArgLine(project))
                 layout.save(new FileWriter(gradleProperties, false))
-            } else {
-
-                // Replace app version in arg line with the new one
-                int ind = property.indexOf("-Dcontrast.override.appversion=")
-                if (ind != -1) {
-                    int indexOfAppVersionStart = ind + "-Dcontrast.override.appversion=".length()
-
-                    int indexOfAppVersionEnd = property.indexOf(" ", indexOfAppVersionStart)
-
-                    if (indexOfAppVersionEnd == -1) {
-                        indexOfAppVersionEnd = property.length()
-                    }
-                    String appVersion = property.substring(indexOfAppVersionStart, indexOfAppVersionEnd)
-
-                    ContrastPluginExtension extension = project.contrastConfiguration
-
-                    property = property.replace(appVersion, ContrastGradlePlugin.getAppVersion(extension.appName, ContrastGradlePlugin.appVersionQualifier))
-
-                    config.setProperty(jvmArgs, property)
-                    layout.save(new FileWriter(gradleProperties, false))
-                }
             }
         }
     }

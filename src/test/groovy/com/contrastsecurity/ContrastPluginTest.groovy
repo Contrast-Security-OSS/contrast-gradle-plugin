@@ -68,10 +68,10 @@ class ContrastPluginTest {
     }
 
     @Test
-    public void testComputeAppVersionQualifier() {
+    public void testComputeAppVersionQualifierTravisBuildNum() {
 
-        String travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
-        String circleBuildNum = System.getenv("CIRCLE_BUILD_NUM")
+        String travisBuildNumber = "5"
+        String circleBuildNum = null
 
         String actualAppVersionQualifier = ""
         if(travisBuildNumber != null) {
@@ -82,7 +82,67 @@ class ContrastPluginTest {
             actualAppVersionQualifier = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
         }
 
-        String appVersionQualifier = ContrastGradlePlugin.computeAppVersionQualifier()
+        String appVersionQualifier = ContrastGradlePlugin.computeAppVersionQualifier(travisBuildNumber, circleBuildNum)
+
+        assertEquals(appVersionQualifier, actualAppVersionQualifier)
+    }
+
+    @Test
+    public void testComputeAppVersionQualifierCircleBuildNum() {
+
+        String travisBuildNumber = null
+        String circleBuildNum = "5"
+
+        String actualAppVersionQualifier = ""
+        if(travisBuildNumber != null) {
+            actualAppVersionQualifier = travisBuildNumber
+        } else if (circleBuildNum != null) {
+            actualAppVersionQualifier = circleBuildNum
+        } else {
+            actualAppVersionQualifier = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
+        }
+
+        String appVersionQualifier = ContrastGradlePlugin.computeAppVersionQualifier(travisBuildNumber, circleBuildNum)
+
+        assertEquals(appVersionQualifier, actualAppVersionQualifier)
+    }
+
+    @Test
+    public void testComputeAppVersionQualifierTravisAndCircleBuildNum() {
+
+        String travisBuildNumber = "5"
+        String circleBuildNum = "5"
+
+        String actualAppVersionQualifier = ""
+        if(travisBuildNumber != null) {
+            actualAppVersionQualifier = travisBuildNumber
+        } else if (circleBuildNum != null) {
+            actualAppVersionQualifier = circleBuildNum
+        } else {
+            actualAppVersionQualifier = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
+        }
+
+        String appVersionQualifier = ContrastGradlePlugin.computeAppVersionQualifier(travisBuildNumber, circleBuildNum)
+
+        assertEquals(appVersionQualifier, actualAppVersionQualifier)
+    }
+
+    @Test
+    public void testComputeAppVersionQualifier() {
+
+        String travisBuildNumber = null
+        String circleBuildNum = null
+
+        String actualAppVersionQualifier = ""
+        if(travisBuildNumber != null) {
+            actualAppVersionQualifier = travisBuildNumber
+        } else if (circleBuildNum != null) {
+            actualAppVersionQualifier = circleBuildNum
+        } else {
+            actualAppVersionQualifier = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
+        }
+
+        String appVersionQualifier = ContrastGradlePlugin.computeAppVersionQualifier(travisBuildNumber, circleBuildNum)
 
         assertEquals(appVersionQualifier, actualAppVersionQualifier)
     }

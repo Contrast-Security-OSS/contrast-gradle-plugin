@@ -61,9 +61,11 @@ class ContrastGradlePlugin implements Plugin<Project> {
         return newArgLine
     }
 
-    static String computeAppVersionQualifier() {
-        String travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
-        String circleBuildNum = System.getenv("CIRCLE_BUILD_NUM")
+    static String computeAppVersionQualifier(String travisBuildNumber, String circleBuildNum) {
+
+        if (appVersionQualifier != null) {
+            return appVersionQualifier
+        }
 
         String appVersionQualifier = ""
         if(travisBuildNumber != null) {
