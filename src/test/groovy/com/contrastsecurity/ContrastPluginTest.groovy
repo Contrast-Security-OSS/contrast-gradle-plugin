@@ -70,6 +70,8 @@ class ContrastPluginTest {
     @Test
     public void testComputeAppVersionQualifierTravisBuildNum() {
 
+        ContrastGradlePlugin.appVersionQualifier = null
+
         String travisBuildNumber = "5"
         String circleBuildNum = null
 
@@ -89,6 +91,8 @@ class ContrastPluginTest {
 
     @Test
     public void testComputeAppVersionQualifierCircleBuildNum() {
+
+        ContrastGradlePlugin.appVersionQualifier = null
 
         String travisBuildNumber = null
         String circleBuildNum = "5"
@@ -110,6 +114,8 @@ class ContrastPluginTest {
     @Test
     public void testComputeAppVersionQualifierTravisAndCircleBuildNum() {
 
+        ContrastGradlePlugin.appVersionQualifier = null
+
         String travisBuildNumber = "5"
         String circleBuildNum = "5"
 
@@ -129,6 +135,8 @@ class ContrastPluginTest {
 
     @Test
     public void testComputeAppVersionQualifier() {
+
+        ContrastGradlePlugin.appVersionQualifier = null
 
         String travisBuildNumber = null
         String circleBuildNum = null
