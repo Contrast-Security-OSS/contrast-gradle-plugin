@@ -4,6 +4,8 @@ import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Test
 
+import java.text.SimpleDateFormat
+
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertTrue
 
@@ -63,6 +65,94 @@ class ContrastPluginTest {
         String actualArgLine = "-javaagent:/demo/jar/path -Dcontrast.override.appname=WebGoat -Dcontrast.server=linux -Dcontrast.env=qa -Dcontrast.override.appversion=WebGoat-1.0.0"
 
         assertEquals(argLine, actualArgLine)
+    }
+
+    @Test
+    public void testComputeAppVersionQualifierTravisBuildNum() {
+
+        ContrastGradlePlugin.appVersionQualifier = null
+
+        String travisBuildNumber = "5"
+        String circleBuildNum = null
+
+        String actualAppVersionQualifier = ""
+        if(travisBuildNumber != null) {
+            actualAppVersionQualifier = travisBuildNumber
+        } else if (circleBuildNum != null) {
+            actualAppVersionQualifier = circleBuildNum
+        } else {
+            actualAppVersionQualifier = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
+        }
+
+        String appVersionQualifier = ContrastGradlePlugin.computeAppVersionQualifier(travisBuildNumber, circleBuildNum)
+
+        assertEquals(appVersionQualifier, actualAppVersionQualifier)
+    }
+
+    @Test
+    public void testComputeAppVersionQualifierCircleBuildNum() {
+
+        ContrastGradlePlugin.appVersionQualifier = null
+
+        String travisBuildNumber = null
+        String circleBuildNum = "5"
+
+        String actualAppVersionQualifier = ""
+        if(travisBuildNumber != null) {
+            actualAppVersionQualifier = travisBuildNumber
+        } else if (circleBuildNum != null) {
+            actualAppVersionQualifier = circleBuildNum
+        } else {
+            actualAppVersionQualifier = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
+        }
+
+        String appVersionQualifier = ContrastGradlePlugin.computeAppVersionQualifier(travisBuildNumber, circleBuildNum)
+
+        assertEquals(appVersionQualifier, actualAppVersionQualifier)
+    }
+
+    @Test
+    public void testComputeAppVersionQualifierTravisAndCircleBuildNum() {
+
+        ContrastGradlePlugin.appVersionQualifier = null
+
+        String travisBuildNumber = "5"
+        String circleBuildNum = "5"
+
+        String actualAppVersionQualifier = ""
+        if(travisBuildNumber != null) {
+            actualAppVersionQualifier = travisBuildNumber
+        } else if (circleBuildNum != null) {
+            actualAppVersionQualifier = circleBuildNum
+        } else {
+            actualAppVersionQualifier = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
+        }
+
+        String appVersionQualifier = ContrastGradlePlugin.computeAppVersionQualifier(travisBuildNumber, circleBuildNum)
+
+        assertEquals(appVersionQualifier, actualAppVersionQualifier)
+    }
+
+    @Test
+    public void testComputeAppVersionQualifier() {
+
+        ContrastGradlePlugin.appVersionQualifier = null
+
+        String travisBuildNumber = null
+        String circleBuildNum = null
+
+        String actualAppVersionQualifier = ""
+        if(travisBuildNumber != null) {
+            actualAppVersionQualifier = travisBuildNumber
+        } else if (circleBuildNum != null) {
+            actualAppVersionQualifier = circleBuildNum
+        } else {
+            actualAppVersionQualifier = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
+        }
+
+        String appVersionQualifier = ContrastGradlePlugin.computeAppVersionQualifier(travisBuildNumber, circleBuildNum)
+
+        assertEquals(appVersionQualifier, actualAppVersionQualifier)
     }
 
 }

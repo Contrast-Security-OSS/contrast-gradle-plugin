@@ -15,7 +15,7 @@ class InstallContrastAgent extends DefaultTask {
 
     @TaskAction
     def exec() {
-        ContrastGradlePlugin.appVersionQualifier = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
+        ContrastGradlePlugin.appVersionQualifier = ContrastGradlePlugin.computeAppVersionQualifier(System.getenv("TRAVIS_BUILD_NUMBER"), System.getenv("CIRCLE_BUILD_NUM"))
 
         addContrastArgLine()
 
