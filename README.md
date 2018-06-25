@@ -62,15 +62,17 @@ contrastConfiguration {
 }
 ```
 * Once username, apiKey, serviceKey, apiUrl, and orgUuid have been configured we can install the contrast jar file by calling the `contrastInstall` task. This will install **contrast.jar** within the projects build directory.
+It will also append to the `org.gradle.jvmargs` property in `gradle.properties` file of the project to include the 
+jvm arguments required to run the application with the contrast java agent.
 ```
 cd path/to/Contrast-Sample-Gradle-Application
 gradle build contrastInstall
 ```
 
-* The next step is to run the application with the java agent.
+* The next step is to run the application with the java agent. 
 ```
 cd path/to/Contrast-Sample-Gradle-Application/build
-java -javaagent:contrast.jar -Dcontrast.appname=mytestapp -Dcontrast.server=mytestserver -jar libs/Contrast-Sample-Gradle-Application-0.0.1-SNAPSHOT.jar
+java -jar libs/Contrast-Sample-Gradle-Application-0.0.1-SNAPSHOT.jar
 ```
 Now, verify that your application is running here: That the test application is running at http://localhost:8080
 
