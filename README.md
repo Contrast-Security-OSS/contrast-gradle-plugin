@@ -27,11 +27,11 @@ We generate the app version as follows and in this order:
 | Parameter   | Required | Default | Description                                             |
 |-------------|----------|---------|---------------------------------------------------------|
 | username    | True     |         | Username in TeamServer                                  |
-| serviceKey  | True     |         | Service Key found in Organization Settings              |
-| apiKey      | True     |         | Api Key found in Organization Settings                  |
-| orgUuid     | True     |         | Organization Uuid found in Organization Settings        |
+| serviceKey  | True     |         | Service Key found in Your Account => Profile page => Your keys => Personal Keys       |
+| apiKey      | True     |         | Api Key found in Your Account => Profile page => Your keys => Organization Keys           |
+| orgUuid     | True     |         | Organization Uuid found in Your Account => Profile page => Your keys => Organization Keys        |
 | appName     | False    |         | Application name                                        |
-| apiUrl      | True     |         | API Url to your TeamServer instance                     |
+| apiUrl      | True     |         | API Url to your TeamServer instance found in Your Account => Profile page => Your keys => Organization Keys                     |
 | serverName  | False    |         | Name of server you set with -Dcontrast.server           |
 | minSeverity | False    | Medium  | Minimum severity level to verify                        |
 | jarPath     | False    |         | Path to contrast.jar if you already have one downloaded |
