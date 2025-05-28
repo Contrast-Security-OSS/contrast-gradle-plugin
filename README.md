@@ -1,3 +1,6 @@
+# ARCHIVED as of March 2025
+See: https://github.com/Contrast-Security-OSS/contrast-sdk-java/tree/main/gradle-plugin
+
 # Contrast Gradle Plugin
 
 Repository for the Contrast Gradle plugin. This plugin will allow for a Contrast Java agent to be downloaded and then ensure that there are no new vulnerabilities found.
